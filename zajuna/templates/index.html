@@ -1,0 +1,360 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    VisLearn | Tu camino internacional
+{% endblock %}
+
+
+{% block content %}
+
+<section id="inicio"
+         class="hero">
+    <div class="hero-background">
+        <img
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUNNdHd5Go5c-S5CND6mobpOuWThcj0C1M2Bplb0zJQYp3SgfDcKZ2atknBh577IpdsgmnKpxnp1ri6zhDR0FmIU6mDsZAKigN9ZZkX2atiTEiXQGZCM3Lo_FxMTHGUn2AWH6IfLWErD6s8OM0teoJ03kjUqEPN6iLXqUp9-AX7ByQIHyUxLZGuToOjXVxdmdtusjSd7-rUHQa68NdY9y2TIpFzXy0HPla_pPtWa59aTyT-Rd4gyctBg"
+            alt="Biblioteca universitaria con estudiantes">
+        <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-container">
+        <div class="hero-content">
+            <h1 class="font-display-lg animate-jackInTheBox">
+                Tu camino hacia oportunidades
+                internacionales comienza aquí
+            </h1>
+            <p class="hero-description animate-fade-up">
+                VisLearn te acompaña en cada etapa de tu proceso
+                de visa mediante asesoría, seguimiento y gestión
+                documental especializada.
+            </p>
+            <div class="hero-buttons">
+                <a href="{% url 'registro' %}"
+                   class="btn-3d">
+                    <span class="ripple ripple-1"></span>
+                    <span class="ripple ripple-2"></span>
+                    <span class="ripple ripple-3"></span>
+                    <span class="ripple ripple-4"></span>
+                    <span class="ripple ripple-5"></span>
+                    <span class="button-text">Registrarme</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ticker">
+    <div class="ticker-track">
+        <div class="ticker-item">
+            Gestión de Visas
+            <span></span>
+        </div>
+        <div class="ticker-item">
+            Asesoría Académica
+            <span></span>
+        </div>
+        <div class="ticker-item">
+            Seguimiento de Trámites
+            <span></span>
+        </div>
+        <div class="ticker-item">
+            Alianza SENA-ADSO
+            <span></span>
+        </div>
+        <div class="ticker-item">
+            Movilidad Internacional
+            <span></span>
+        </div>
+        <!-- Repetición para animación -->
+        <div class="ticker-item">
+            Gestión de Visas
+            <span></span>
+        </div>
+        <div class="ticker-item">
+            Asesoría Académica
+            <span></span>
+        </div>
+        <div class="ticker-item">
+            Seguimiento de Trámites
+            <span></span>
+        </div>
+        <div class="ticker-item">
+            Alianza SENA-ADSO
+            <span></span>
+        </div>
+        <div class="ticker-item">
+            Movilidad Internacional
+            <span></span>
+        </div>
+    </div>
+</section>
+
+<section id="servicios"
+         class="benefits-section">
+    <div class="container">
+        <div class="cards-grid">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"
+                         style="background-image: url('https://images.pexels.com/photos/8296948/pexels-photo-8296948.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');">
+                        <div class="flip-card-content">
+                            <h3>Gestión de Documentos</h3>
+                            <span>Vault cifrado</span>
+                        </div>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>
+                            Organiza y almacena de forma segura
+                            todos los documentos requeridos para
+                            tu solicitud en un solo lugar.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"
+                         style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=srgb&fm=jpg&w=800&q=80');">
+                        <div class="flip-card-content">
+                            <h3>Seguimiento Real</h3>
+                            <span>Panel en vivo</span>
+                        </div>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>
+                            Consulta el estado de tu proceso en
+                            tiempo real y recibe actualizaciones
+                            directas de nuestros expertos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"
+                         style="background-image: url('https://images.pexels.com/photos/7876154/pexels-photo-7876154.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');">
+                        <div class="flip-card-content">
+                            <h3>Asesorías Expertas</h3>
+                            <span>1:1 certificados</span>
+                        </div>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>
+                            Agenda citas personalizadas con asesores
+                            especializados en trámites de visa
+                            estudiantil internacional.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"
+                         style="background-image: url('https://images.pexels.com/photos/32944546/pexels-photo-32944546.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');">
+                        <div class="flip-card-content">
+                            <h3>Alertas Inteligentes</h3>
+                            <span>IA proactiva</span>
+                        </div>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>
+                            Recibe alertas automáticas sobre
+                            vencimientos de documentos y
+                            actualizaciones críticas de tu trámite.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="journey-section">
+    <div class="container">
+        <div class="section-heading">
+            <h2>Tu Viaje con VisLearn</h2>
+            <p>
+                Hemos simplificado el complejo mundo de las visas
+                estudiantiles en un proceso claro de seis pasos
+                diseñados para tu éxito.
+            </p>
+        </div>
+        <div class="journey">
+            <div class="journey-line"></div>
+            <div class="journey-grid">
+                <div class="journey-step">
+                    <div class="step-number">1</div>
+                    <h4>Registro</h4>
+                    <p>Crea tu perfil académico y define tu destino.</p>
+                </div>
+                <div class="journey-step">
+                    <div class="step-number">2</div>
+                    <h4>Carga</h4>
+                    <p>Sube los documentos básicos para revisión inicial.</p>
+                </div>
+                <div class="journey-step">
+                    <div class="step-number">3</div>
+                    <h4>Solicitud</h4>
+                    <p>Iniciamos formalmente el trámite institucional.</p>
+                </div>
+                <div class="journey-step">
+                    <div class="step-number">4</div>
+                    <h4>Revisión</h4>
+                    <p>Verificación exhaustiva por parte de expertos.</p>
+                </div>
+                <div class="journey-step">
+                    <div class="step-number">5</div>
+                    <h4>Seguimiento</h4>
+                    <p>Gestión activa ante la entidad consular.</p>
+                </div>
+                <div class="journey-step final">
+                    <div class="step-number">✈</div>
+                    <h4>Resultado</h4>
+                    <p>¡Tu visa aprobada y lista para tu viaje!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contacto" class="contact-section">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="contact-form-card">
+                <h2>Contáctanos</h2>
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mensaje</label>
+                        <textarea id="message" name="message" rows="4" placeholder="¿En qué podemos ayudarte?" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Enviar Mensaje</button>
+                </form>
+            </div>
+            <div class="location-card">
+                <div class="location-icon">⌖</div>
+                <h3>Sede ADSO SENA</h3>
+                <p>Calle 57 # 8 - 69, Bogotá, Colombia</p>
+                <div class="map-container">
+                    <iframe
+                        title="Sede ADSO SENA"
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=-74.0693%2C4.6420%2C-74.0620%2C4.6480&layer=mapnik&marker=4.6450%2C-74.0656"
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="academic-section">
+    <div class="container">
+        <div class="academic-grid">
+            <div class="academic-image">
+                <img
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcioFYbWCwbnOZySz0mLmwCG5R8xypOU6ahcoUtx8wXdjPYVcO24W1XhbxLDYxrdA0W_GZ2oGig5qFvBdk58-txiu2e4N1jvVIrDe0Xk9_0tG6ye4ybKtkHcvbO1HTmq4jANm9WhpMaBqPBQZNqhpmuVi8hw6Saf-2lMap2jxm92Hob8py9equXBGAJ7fkWWmp6GFu4ij2SkeK6l5bXCEfHTjEJz7XGwOIo_JICHdZRCP2nC6mnONrQQ"
+                    alt="Estudiantes colaborando">
+            </div>
+            <div class="academic-content">
+                <h2>Formación que trasciende fronteras</h2>
+                <p>
+                    Nuestra metodología combina el rigor técnico
+                    con la calidez humana. Entendemos que cada
+                    proceso de visa es un proyecto de vida, y por
+                    eso dedicamos atención personalizada a cada
+                    detalle de tu documentación y aplicación.
+                </p>
+                <ul>
+                    <li>
+                        <span>✓</span>
+                        Soporte técnico 24/7 para el cargue de documentos.
+                    </li>
+                    <li>
+                        <span>✓</span>
+                        Alianza directa con instituciones educativas globales.
+                    </li>
+                    <li>
+                        <span>✓</span>
+                        Simulacros de entrevistas consulares con expertos.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials-section">
+    <div class="container">
+        <div class="section-heading">
+            <h2>Lo que dicen nuestros egresados</h2>
+        </div>
+        <div class="testimonials-grid">
+            <div class="flip-card testimonial-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"
+                         style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&h=800&fit=crop&auto=format');">
+                        <div class="flip-card-content">
+                            <h3>Carlos Ruiz</h3>
+                            <span>Desarrollador en Berlín</span>
+                        </div>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>
+                            “Gracias a VisLearn y la alianza ADSO,
+                            ahora trabajo como desarrollador en Berlín.
+                            El proceso de visa fue impecable.”
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card testimonial-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"
+                         style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&h=800&fit=crop&auto=format');">
+                        <div class="flip-card-content">
+                            <h3>Elena Gómez</h3>
+                            <span>Egresado en Toronto
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>
+                            “La asesoría experta me dio la confianza
+                            que necesitaba para mi entrevista consular.
+                            ¡Ya estoy en Toronto!”
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card testimonial-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"
+                         style="background-image: url('https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=800&h=800&fit=crop&auto=format');">
+                        <div class="flip-card-content">
+                            <h3>Mateo López</h3>
+                            <span>Aprendiz SENA</span>
+                        </div>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>
+                            “Excelente acompañamiento en cada paso.
+                            VisLearn entiende las necesidades de
+                            los aprendices SENA.”
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

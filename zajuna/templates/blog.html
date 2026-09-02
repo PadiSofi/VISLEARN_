@@ -1,0 +1,350 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Blog | VisLearn{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<main class="blog-page">
+    <section class="blog-hero">
+        <div class="blog-hero-content">
+            <span class="blog-eyebrow">VISLEARN</span>
+            <h1>
+                Ideas, guías y oportunidades
+                para tu futuro académico
+            </h1>
+            <p>
+                Explora artículos, consejos y recursos sobre educación
+                internacional, procesos de visa, oportunidades académicas
+                y preparación profesional.
+            </p>
+        </div>
+    </section>
+    <section class="blog-tools">
+        <div class="blog-search">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" id="blogSearch" placeholder="Buscar artículos..." autocomplete="off">
+            <button type="button" id="searchButton">Buscar</button>
+        </div>
+        <div class="blog-categories">
+            <button type="button" class="category-btn active" data-category="all">Todos</button>
+            <button type="button" class="category-btn" data-category="visa">Guías de Visa</button>
+            <button type="button" class="category-btn" data-category="oportunidades">Oportunidades</button>
+            <button type="button" class="category-btn" data-category="testimonios">Testimonios</button>
+            <button type="button" class="category-btn" data-category="consejos">Consejos</button>
+        </div>
+    </section>
+    <section class="blog-featured">
+        <div class="featured-image">
+            <img src="{% static 'img/visa-j1.jpg' %}" alt="Estudiantes estudiando en una biblioteca universitaria">
+            <span class="featured-badge">ARTÍCULO DESTACADO</span>
+        </div>
+        <div class="featured-content">
+            <span class="article-category">Guías de Visa</span>
+            <h2>Cómo prepararte para un proceso de visa académica</h2>
+            <p>
+                Conoce los documentos más importantes, los tiempos de
+                preparación y algunos consejos para afrontar tu proceso
+                académico internacional con mayor seguridad.
+            </p>
+            <div class="article-meta">
+                <div class="author-info">
+                    <div class="author-avatar">V</div>
+                    <div>
+                        <strong>Equipo VisLearn</strong>
+                        <span>Guía académica · 8 min de lectura</span>
+                    </div>
+                </div>
+                <a href="#" class="read-link">
+                    Leer artículo
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class="blog-layout">
+        <div class="articles-section">
+            <div class="section-heading">
+                <div><span class="section-label">ACTUALIDAD</span>
+                    <h2>Últimos artículos</h2>
+                </div>
+            </div>
+            <div class="articles-grid" id="articlesGrid">
+                <article class="article-card" data-category="oportunidades" data-title="becas europeas estudiantes latinoamericanos">
+                    <div class="article-image">
+                        <img src="{% static 'img/becas.jpg' %}" alt="Oportunidades de becas para estudiantes">
+                        <span class="article-tag">Oportunidades</span>
+                    </div>
+                    <div class="article-content">
+                        <span class="article-date">12 de agosto de 2026</span>
+                        <h3>Becas europeas para estudiantes latinoamericanos</h3>
+                        <p>
+                            Descubre algunas de las oportunidades académicas
+                            disponibles para estudiantes que desean continuar
+                            su formación en Europa.
+                        </p>
+                        <a href="#" class="article-link">Leer más</a>
+                    </div>
+                </article>
+                <article class="article-card" data-category="testimonios" data-title="de bogota a berlin historia estudiante">
+                    <div class="article-image">
+                        <img src="{% static 'img/historia.jpg' %}" alt="Estudiantes conversando en un campus universitario">
+                        <span class="article-tag">Testimonios</span>
+                    </div>
+                    <div class="article-content">
+                        <span class="article-date">5 de agosto de 2026</span>
+                        <h3>De Bogotá a Berlín: una historia de crecimiento</h3>
+                        <p>
+                            Conoce la experiencia de una estudiante que decidió
+                            llevar su formación en desarrollo de software a un
+                            nuevo escenario internacional.
+                        </p>
+                        <a href="#" class="article-link">Leer más</a>
+                    </div>
+                </article>
+                <article class="article-card" data-category="consejos" data-title="tecnicas estudiar aprender idiomas">
+                    <div class="article-image">
+                        <img src="{% static 'img/ielts.jpg' %}" alt="Estudiante preparando un examen de idiomas">
+                        <span class="article-tag">Consejos</span>
+                    </div>
+                    <div class="article-content">
+                        <span class="article-date">29 de julio de 2026</span>
+                        <h3>Técnicas para mejorar tu preparación en idiomas</h3>
+                        <p>
+                            Algunas estrategias prácticas que puedes utilizar
+                            para organizar tu estudio y mejorar progresivamente
+                            tus habilidades lingüísticas.
+                        </p>
+                        <a href="#" class="article-link">Leer más</a>
+                    </div>
+                </article>
+                <article class="article-card" data-category="visa" data-title="visa estudiante reino unido requisitos">
+                    <div class="article-image">
+                        <img src="{% static 'img/visa-j2.jpg' %}" alt="Edificio universitario relacionado con estudios internacionales">
+                        <span class="article-tag">Guías de Visa</span>
+                    </div>
+                    <div class="article-content">
+                        <span class="article-date">20 de julio de 2026</span>
+                        <h3>Requisitos para una visa de estudiante</h3>
+                        <p>
+                            Una introducción a los documentos, requisitos
+                            financieros y aspectos que debes considerar antes
+                            de iniciar una solicitud.
+                        </p>
+                        <a href="#" class="article-link">Leer más</a>
+                    </div>
+                </article>
+                <article class="article-card" data-category="consejos" data-title="preparar entrevista academica">
+                    <div class="article-image">
+                        <img src="{% static 'img/entrevista.jpg' %}" alt="Preparación para una entrevista académica">
+                        <span class="article-tag">Consejos</span>
+                    </div>
+                    <div class="article-content">
+                        <span class="article-date">14 de julio de 2026</span>
+                        <h3>Cómo prepararte para una entrevista académica</h3>
+                        <p>
+                            Aprende a organizar tus respuestas y comunicar
+                            tus objetivos académicos de manera clara y segura.
+                        </p>
+                        <a href="#" class="article-link">Leer más</a>
+                    </div>
+                </article>
+                <article class="article-card" data-category="visa" data-title="demostrar solvencia economica solicitud">
+                    <div class="article-image">
+                        <img src="{% static 'img/finanzas.jpg' %}" alt="Documentos relacionados con planificación financiera">
+                        <span class="article-tag">Guías de Visa</span>
+                    </div>
+                    <div class="article-content">
+                        <span class="article-date">8 de julio de 2026</span>
+                        <h3>Cómo organizar tu documentación financiera</h3>
+                        <p>
+                            Recomendaciones para mantener organizada la
+                            documentación financiera que puede ser solicitada
+                            durante un proceso académico internacional.
+                        </p>
+                        <a href="#" class="article-link">Leer más</a>
+                    </div>
+                </article>
+            </div>
+
+            <div class="no-results" id="noResults">
+                <h3>No encontramos artículos</h3>
+                <p>Intenta realizar otra búsqueda o seleccionar una categoría.</p>
+            </div>
+            <div class="load-more-container">
+                <button type="button" class="load-more-btn" id="loadMoreBtn">Cargar más artículos</button>
+            </div>
+
+        </div>
+
+        <aside class="blog-sidebar">
+            <div class="sidebar-card">
+                <div class="sidebar-title">
+                    <h3>Temas populares</h3>
+                </div>
+                <div class="tags-list">
+                    <a href="#" data-category-link="visa">Visa de estudiante</a>
+                    <a href="#">Schengen</a>
+                    <a href="#">Becas</a>
+                    <a href="#">Idiomas</a>
+                    <a href="#">Entrevistas</a>
+                    <a href="#">Educación internacional</a>
+                    <a href="#">Desarrollo de software</a>
+                    <a href="#">Vivienda</a>
+                </div>
+            </div>
+            <div class="sidebar-card">
+                <div class="sidebar-title">
+                    <h3>Lecturas recomendadas</h3>
+                </div>
+                <div class="recommended-list">
+                    <a href="#" class="recommended-item">
+                        <div class="recommended-image">
+                            <img src="{% static 'img/finanzas2.jpg' %}" alt="Documentación financiera">
+                        </div>
+                        <div class="recommended-content">
+                            <h4>Cómo organizar tu documentación financiera</h4>
+                            <span>5 min de lectura</span>
+                        </div>
+                    </a>
+                    <a href="#" class="recommended-item">
+                        <div class="recommended-image">
+                            <img src="{% static 'img/entrevista2.jpg' %}" alt="Entrevista académica">
+                        </div>
+                        <div class="recommended-content">
+                            <h4>Preguntas frecuentes en una entrevista</h4>
+                            <span>7 min de lectura</span>
+                        </div>
+                    </a>
+                    <a href="#" class="recommended-item">
+                        <div class="recommended-image">
+                            <img src="{% static 'img/ielts-2.jpg' %}" alt="Preparación académica">
+                        </div>
+                        <div class="recommended-content">
+                            <h4>Consejos para mejorar tu preparación</h4>
+                            <span>6 min de lectura</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sidebar-cta">
+                <h3>¿Tienes dudas sobre tu proceso?</h3>
+                <p>
+                    Nuestro equipo puede orientarte sobre los servicios
+                    y recursos disponibles en VisLearn.
+                </p>
+                <a href="{% url 'contacto' %}">Contáctanos</a>
+            </div>
+        </aside>
+    </section>
+</main>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("blogSearch");
+    const searchButton = document.getElementById("searchButton");
+    const categoryButtons = document.querySelectorAll(".category-btn");
+    const articles = document.querySelectorAll(".article-card");
+    const noResults = document.getElementById("noResults");
+    const loadMoreBtn = document.getElementById("loadMoreBtn");
+    let selectedCategory = "all";
+    function filterArticles() {
+        const searchText = searchInput.value
+            .toLowerCase()
+            .trim();
+        let visibleArticles = 0;
+        articles.forEach(article => {
+            const category = article.dataset.category;
+            const title = article.dataset.title;
+            const matchesCategory =
+                selectedCategory === "all" ||
+                category === selectedCategory;
+            const matchesSearch =
+                title.includes(searchText);
+            if (matchesCategory && matchesSearch) {
+                article.style.display = "flex";
+                visibleArticles++;
+            } else {
+                article.style.display = "none";
+            }
+        });
+        if (visibleArticles === 0) {
+            noResults.classList.add("show");
+        } else {
+            noResults.classList.remove("show");
+        }
+    }
+
+    categoryButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            categoryButtons.forEach(btn => {
+                btn.classList.remove("active");
+            });
+            this.classList.add("active");
+            selectedCategory = this.dataset.category;
+            filterArticles();
+        });
+    });
+
+    searchButton.addEventListener("click", function () {
+        filterArticles();
+    });
+
+    searchInput.addEventListener("keyup", function (event) {
+
+        if (event.key === "Enter") {
+            filterArticles();
+        }
+
+    });
+
+    /*
+     * Botón de cargar más.
+     * Por ahora solamente muestra un mensaje visual.
+     * Más adelante puede conectarse con Django y la base de datos.
+     */
+    loadMoreBtn.addEventListener("click", function () {
+        this.innerHTML = `
+            <span class="material-symbols-outlined">
+                check_circle
+            </span>
+            Todos los artículos cargados
+        `;
+        this.disabled = true;
+    });
+
+    /*
+     * Enlaces de categorías del sidebar.
+     */
+    document.querySelectorAll("[data-category-link]")
+        .forEach(link => {
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+                const category = this.dataset.categoryLink;
+                selectedCategory = category;
+                categoryButtons.forEach(btn => {
+                    btn.classList.toggle(
+                        "active",
+                        btn.dataset.category === category
+                    );
+                });
+                filterArticles();
+                window.scrollTo({
+                    top: document.querySelector(".articles-section").offsetTop - 100,
+                    behavior: "smooth"
+                });
+            });
+        });
+});
+</script>
+
+{% endblock %}

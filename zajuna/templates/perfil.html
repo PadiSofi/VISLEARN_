@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h2>Perfil del Usuario</h2>
+    <div class="card p-4 shadow-sm">
+        <h4>{{ request.user.first_name }}</h4>
+        <p><strong>Correo electrónico:</strong> {{ request.user.email }}</p>
+        {% if perfil %}
+            <p><strong>Tipo de Documento:</strong> {{ perfil.tipo_documento }}</p>
+            <p><strong>Número de Documento:</strong> {{ perfil.numero_documento }}</p>
+            <p><strong>Programa:</strong> {{ perfil.programa }}</p>
+        {% endif %}
+        <a href="{% url 'logout' %}" class="btn btn-danger mt-3">Cerrar Sesión</a>
+    </div>
+</div>
+{% endblock %}

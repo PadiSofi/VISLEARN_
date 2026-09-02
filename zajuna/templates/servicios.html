@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Servicios | VisLearn{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/services.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="services-page">
+    <section class="services-hero">
+        <div class="services-hero-background">
+            <img src="{% static 'img/biblioteca.jpg' %}" alt="">
+            <div class="services-hero-overlay"></div>
+        </div>
+        <div class="services-hero-container">
+            <div class="services-hero-content animate-fade-up">
+                <h1 class="font-display-lg">
+                    Todo lo que necesitas para avanzar hacia tu futuro internacional
+                </h1>
+                <p class="services-hero-description">
+                    Te acompañamos durante todo el proceso de movilidad internacional,
+                    desde la organización de tus documentos hasta el seguimiento de
+                    tu solicitud de visa.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-intro">
+        <div class="services-decoration services-circle" style="left: -100px; top: -60px;"></div>
+        <div class="services-decoration services-circle-small" style="right: 60px; bottom: -30px;"></div>
+        <div class="services-decoration services-line" style="right: 15%; top: 30px;"></div>
+        <div class="container">
+            <div class="section-heading services-fade-up">
+                <span class="services-kicker">
+                    ¿Cómo podemos ayudarte?
+                </span>
+                <h2>
+                    Servicios diseñados para acompañarte
+                </h2>
+                <p>
+                    En VisLearn centralizamos las herramientas y el acompañamiento
+                    necesarios para que puedas gestionar tu proceso de movilidad
+                    internacional de manera organizada, segura y sencilla.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-grid-section">
+        <div class="container">
+            <div class="services-grid">
+                <article class="service-card">
+                    <span class="service-number">01</span>
+                    <div class="service-icon">✎</div>
+                    <h3>Gestión de Documentos</h3>
+                    <p>
+                        Organiza y almacena de manera segura los documentos necesarios
+                        para tu proceso de visa en un solo lugar.
+                    </p>
+                    <ul class="service-features">
+                        <li class="service-feature">
+                            <span class="service-feature-icon">✓</span>
+                            <span>Organización de documentos.</span>
+                        </li>
+                        <li class="service-feature">
+                            <span class="service-feature-icon">✓</span>
+                            <span>Control del estado de cada documento.</span>
+                        </li>
+                        <li class="service-feature">
+                            <span class="service-feature-icon">✓</span>
+                            <span>Identificación de documentos pendientes.</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <article class="service-card">
+                    <span class="service-number">02</span>
+                    <div class="service-icon">◉</div>
+                    <h3>Seguimiento del Trámite</h3>
+                    <p>
+                        Consulta el estado de tu proceso y mantente informado sobre
+                        las diferentes etapas de tu solicitud.
+                    </p>
+                    <ul class="service-features">
+                        <li class="service-feature">
+                            <span class="service-feature-icon">✓</span>
+                            <span>Visualización del estado del trámite.</span>
+                        </li>
+                        <li class="service-feature">
+                            <span class="service-feature-icon">✓</span>
+                            <span>Actualizaciones del proceso.</span>
+                        </li>
+                        <li class="service-feature">
+                            <span class="service-feature-icon">✓</span>
+                            <span>Historial de avances.</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <article class="service-card">
+                    <span class="service-number">03</span>
+                    <div class="service-icon">✦</div>
+                    <h3>Asesorías Expertas</h3>
+                    <p>
+                        Recibe orientación durante las diferentes etapas de tu
+                        proceso académico y migratorio.
+                    </p>
+                    <ul class="service-features">
+                        <li class="service-feature">
+                            <span class="service-feature-icon">✓</span>
+                            <span>Orientación personalizada.</span>
+                        </li>
+                        <li class="service-feature">
+                            <span class="service-feature-icon">✓</span>
+                            <span>Preparación para entrevistas.</span>
+                        </li>
+                        <li class="service-feature">
+                            <span class="service-feature-icon">✓</span>
+                            <span>Resolución de dudas.</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <article class="service-card">
+                    <span class="service-number">04</span>
+                    <div class="service-icon">✱</div>
+                    <h3>Alertas Inteligentes</h3>
+                    <p>
+                        Recibe recordatorios sobre fechas importantes, documentos
+                        pendientes y actualizaciones relacionadas con tu proceso.
+                    </p>
+                    <ul class="service-features">
+                        <li class="service-feature">
+                            <span class="service-feature-icon">✓</span>
+                            <span>Recordatorios de vencimientos.</span>
+                        </li>
+                        <li class="service-feature">
+                            <span class="service-feature-icon">✓</span>
+                            <span>Avisos de documentos pendientes.</span>
+                        </li>
+                        <li class="service-feature">
+                            <span class="service-feature-icon">✓</span>
+                            <span>Notificaciones de cambios importantes.</span>
+                        </li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-highlight">
+        <div class="container">
+            <div class="services-highlight-grid">
+                <div class="services-highlight-image">
+                    <img
+                        src="https://images.pexels.com/photos/7876154/pexels-photo-7876154.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                        alt="Estudiantes recibiendo asesoría académica">
+                </div>
+                <div class="services-highlight-content">
+                    <span class="services-kicker">
+                        Acompañamiento integral
+                    </span>
+                    <h2>
+                        Un proceso pensado para ti
+                    </h2>
+                    <p>
+                        Nuestro objetivo es que tengas claridad sobre cada etapa de
+                        tu proceso y puedas avanzar con mayor confianza hacia tu
+                        destino internacional.
+                    </p>
+                    <div class="services-highlight-feature">
+                        <div class="services-highlight-feature-icon">✓</div>
+                        <div>
+                            <h4>Información organizada</h4>
+                            <p>Toda la información importante de tu proceso estará centralizada.</p>
+                        </div>
+                    </div>
+                    <div class="services-highlight-feature">
+                        <div class="services-highlight-feature-icon">◉</div>
+                        <div>
+                            <h4>Acompañamiento</h4>
+                            <p>Tendrás orientación durante las diferentes etapas del proceso.</p>
+                        </div>
+                    </div>
+                    <div class="services-highlight-feature">
+                        <div class="services-highlight-feature-icon">⌖</div>
+                        <div>
+                            <h4>Mayor seguridad</h4>
+                            <p>Mantén tus documentos y avances organizados dentro de la plataforma.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-process">
+        <div class="container">
+            <div class="section-heading services-fade-up">
+                <span class="services-kicker">Nuestro proceso</span>
+                <h2>De la planificación al viaje</h2>
+                <p>
+                    Utilizamos un proceso organizado para ayudarte a comprender
+                    qué debes hacer en cada etapa.
+                </p>
+            </div>
+            <div class="process-wrap">
+                <div class="process-line"></div>
+                <div class="process-grid">
+                    <div class="process-step">
+                        <div class="process-step-number">1</div>
+                        <h4>Regístrate</h4>
+                        <p>Crea tu perfil y proporciona la información necesaria para iniciar tu proceso.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-step-number">2</div>
+                        <h4>Organiza</h4>
+                        <p>Carga tus documentos y revisa qué elementos necesitas completar.</p>
+                    </div>
+                    <div class="process-step final">
+                        <div class="process-step-number">✈</div>
+                        <h4>Avanza</h4>
+                        <p>Realiza el seguimiento de tu proceso hasta alcanzar tu objetivo internacional.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-cta-section">
+        <div class="container">
+            <div class="services-cta">
+                <div class="services-cta-inner services-fade-up">
+                    <span class="services-cta-eyebrow">Tu futuro comienza hoy</span>
+                    <h2>¿Listo para comenzar tu proceso?</h2>
+                    <p>
+                        Da el primer paso y comienza a organizar tu camino
+                        hacia una oportunidad internacional.
+                    </p>
+                    <a href="{% url 'registro' %}" class="btn-3d">
+                        <span class="ripple ripple-1"></span>
+                        <span class="ripple ripple-2"></span>
+                        <span class="ripple ripple-3"></span>
+                        <span class="ripple ripple-4"></span>
+                        <span class="ripple ripple-5"></span>
+                        <span class="button-text">Comenzar ahora</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

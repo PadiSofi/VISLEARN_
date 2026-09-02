@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>VisLearn - Iniciar Sesión</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#885200",
+                        "on-tertiary-fixed-variant": "#514700",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "outline": "#867463",
+                        "on-primary-container": "#5d3600",
+                        "primary-fixed": "#ffdcbc",
+                        "surface-container-high": "#e8e8e8",
+                        "link-accent": "#18A0FB",
+                        "error-container": "#ffdad6",
+                        "on-background": "#1b1b1b",
+                        "surface-bright": "#f9f9f9",
+                        "background": "#f9f9f9",
+                        "on-surface-variant": "#534435",
+                        "on-tertiary-fixed": "#211c00",
+                        "surface-soft": "#F2F2F2",
+                        "tertiary-container": "#bcab48",
+                        "tertiary-fixed": "#f7e37a",
+                        "secondary-fixed-dim": "#fabc2e",
+                        "on-tertiary-container": "#483f00",
+                        "primary-fixed-dim": "#ffb86a",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface": "#f9f9f9",
+                        "on-secondary-container": "#6e4f00",
+                        "background-page": "#FFFCE2",
+                        "surface-tint": "#885200",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#dac761",
+                        "inverse-surface": "#303030",
+                        "on-secondary-fixed": "#261900",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "surface-container": "#eeeeee",
+                        "outline-variant": "#d9c3af",
+                        "on-primary-fixed-variant": "#683d00",
+                        "secondary-container": "#febf31",
+                        "inverse-primary": "#ffb86a",
+                        "secondary": "#7b5800",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#dadada",
+                        "surface-container-highest": "#e2e2e2",
+                        "primary-container": "#ed9726",
+                        "on-primary-fixed": "#2c1700",
+                        "on-secondary-fixed-variant": "#5d4200",
+                        "tertiary": "#6c5e00",
+                        "on-surface": "#1b1b1b",
+                        "secondary-fixed": "#ffdea4",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f3f3f3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "container-max": "1200px",
+                        "gutter": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Libre Caslon Text"],
+                        "body-md": ["\"Source Serif 4\""],
+                        "body-lg": ["\"Source Serif 4\""],
+                        "display-lg": ["Libre Caslon Text"],
+                        "headline-lg-mobile": ["Libre Caslon Text"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Libre Caslon Text"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background-page min-h-screen flex flex-col text-on-surface font-body-md">
+    <header class="w-full sticky top-0 z-50 bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline"></header>
+
+    <main class="flex-grow flex items-center justify-center relative w-full overflow-hidden">
+        <div class="absolute inset-0 w-full h-full z-0">
+            <div class="bg-cover bg-center w-full h-full absolute inset-0" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBIm1gEJLSKoGNpYnIQEH2xxL19Zl8uZjSCK8RYZ8pn5Oz0cRB9iNIu9pGHY3e_eb9HcBCWJ2DYG81Gy2eAjqG8Dov8h9veHVLmrfMDsGMU-WRNjs4qGNWrnvADnvTVEl3Q2vqnrqcq3emDK1BxegYsnATLth5SbnvpnU4ugza76Dcg0Xq0i0ub5DTZ0rQ3v-LTinUyBf0c1erevIUJrRTY67w2lpeq4I5v7BSh6Vk40JjgJ5eKOeMmdQ')"></div>
+            <div class="absolute inset-0 bg-surface-container-highest/80 backdrop-blur-[2px]"></div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-md px-margin-mobile my-12">
+            <div class="bg-surface-container-lowest rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-t-2 border-secondary-container p-8 flex flex-col gap-6 w-full relative">
+                <div class="text-center space-y-2">
+                    <h1 class="font-headline-lg text-headline-lg text-primary">Bienvenido</h1>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Accede a tu cuenta en VisLearn</p>
+                </div>
+
+                <!-- Bloque para renderizar mensajes de error de autenticación -->
+                {% if messages %}
+                    <div class="space-y-2">
+                        {% for message in messages %}
+                            <div class="p-3 bg-error-container text-on-error-container rounded-lg text-sm">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="POST" action="{% url 'iniciosesion' %}" class="flex flex-col gap-5">
+                    {% csrf_token %}
+                    
+                    <div class="flex flex-col gap-1">
+                        <label class="font-label-md text-label-md text-on-surface" for="docType">Tipo de documento</label>
+                        <select class="px-4 py-3 rounded-lg border border-outline-variant bg-surface-container-lowest focus:outline-none focus:border-secondary-container focus:ring-1 focus:ring-secondary-container transition-colors font-body-md text-body-md text-on-surface w-full" id="docType" name="docType" required>
+                            <option value="" disabled selected>Selecciona tipo de documento</option>
+                            <option value="TI">Tarjeta de Identidad</option>
+                            <option value="CC">Cédula de Ciudadanía</option>
+                            <option value="CE">Cédula de Extranjería</option>
+                            <option value="PPT">Permiso por Protección Temporal</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col gap-1">
+                        <label class="font-label-md text-label-md text-on-surface" for="docNumber">Número de documento</label>
+                        <input class="px-4 py-3 rounded-lg border border-outline-variant bg-surface-container-lowest focus:outline-none focus:border-secondary-container focus:ring-1 focus:ring-secondary-container transition-colors font-body-md text-body-md text-on-surface w-full" id="docNumber" name="docNumber" placeholder="Ingresa tu número" type="text" required>
+                    </div>
+
+                    <div class="flex flex-col gap-1">
+                        <div class="flex justify-between items-center">
+                            <label class="font-label-md text-label-md text-on-surface" for="password">Contraseña</label>
+                            <a class="font-label-sm text-label-sm text-primary hover:underline underline-offset-2" href="#">¿Olvidaste tu contraseña?</a>
+                        </div>
+                        <input class="px-4 py-3 rounded-lg border border-outline-variant bg-surface-container-lowest focus:outline-none focus:border-secondary-container focus:ring-1 focus:ring-secondary-container transition-colors font-body-md text-body-md text-on-surface w-full" id="password" name="password" placeholder="••••••••" type="password" required>
+                    </div>
+
+                    <button class="mt-2 w-full bg-primary-container text-on-primary font-headline-md text-headline-md py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_14px_0_rgba(0,0,0,0.04)] flex justify-center items-center" type="submit">
+                        Iniciar Sesión
+                    </button>
+                </form>
+
+                <div class="relative flex py-2 items-center">
+                    <div class="flex-grow border-t border-outline-variant"></div>
+                    <span class="flex-shrink-0 mx-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">O</span>
+                    <div class="flex-grow border-t border-outline-variant"></div>
+                </div>
+
+                <div class="text-center mt-2">
+                    <p class="font-body-md text-body-md text-on-surface-variant">
+                        ¿No tienes una cuenta? <a class="text-primary font-medium hover:underline underline-offset-2" href="{% url 'registro' %}">Regístrate</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full mt-auto bg-surface-container dark:bg-surface-container-highest bg-surface-container-low dark:bg-surface-container-high"></footer>
+</body>
+</html>
