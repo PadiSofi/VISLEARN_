@@ -1,0 +1,78 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Mis Aprendices{% endblock %}
+{% block dashboard_css %}<link rel="stylesheet" href="{% static 'css/instructor.css' %}">{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="instr-header">
+        <h1 class="instr-title">Panel de Instructor</h1>
+        <p class="instr-subtitle">Consulta el progreso de tus aprendices en el proceso de movilidad estudiantil.</p>
+    </div>
+
+    <div class="instr-stats">
+        <div class="instr-stat-card">
+            <p class="instr-stat-card__value">{{ total_aprendices }}</p>
+            <p class="instr-stat-card__label">Aprendices en Seguimiento</p>
+        </div>
+        <div class="instr-stat-card">
+            <p class="instr-stat-card__value">{{ documentos_pendientes }}</p>
+            <p class="instr-stat-card__label">Documentos por Revisar</p>
+        </div>
+        <div class="instr-stat-card">
+            <p class="instr-stat-card__value">{{ procesos_completados }}</p>
+            <p class="instr-stat-card__label">Procesos Completados</p>
+        </div>
+    </div>
+
+    <form class="instr-search" method="get">
+        <input type="text" name="q" value="{{ query }}" placeholder="Buscar por nombre o número de documento...">
+        <button type="submit" class="btn-solid">Buscar</button>
+    </form>
+
+    <div class="instr-table-wrap">
+        <table class="instr-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Documento</th>
+                    <th>Correo</th>
+                    <th>País Destino</th>
+                    <th>Avance</th>
+                    <th>Fecha Registro</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for perfil in aprendices %}
+                    <tr>
+                        <td class="instr-table__name">{{ perfil.usuario.get_full_name }}</td>
+                        <td>{{ perfil.usuario.numero_documento }}</td>
+                        <td>{{ perfil.usuario.email }}</td>
+                        <td>{{ perfil.pais_destino|default:"—" }}</td>
+                        <td>
+                            <div class="instr-progress-mini">
+                                <div class="instr-progress-mini__bar">
+                                    <div class="instr-progress-mini__fill" style="width: {{ perfil.porcentaje_avance_proceso }}%;"></div>
+                                </div>
+                                <span>{{ perfil.porcentaje_avance_proceso }}%</span>
+                            </div>
+                        </td>
+                        <td>{{ perfil.usuario.date_joined|date:"d M Y" }}</td>
+                        <td>
+                            <div class="instr-actions">
+                                <a href="{% url 'instructor:detalle_aprendiz' perfil.pk %}" title="Ver detalle">
+                                    <span class="material-symbols-outlined" style="font-size:20px;">visibility</span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="7" style="text-align:center; color:var(--color-on-surface-variant); padding:32px;">No hay aprendices registrados todavía.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,114 @@
+/* ===== BOTONES FINOS ===== */
+:is(.btn-primary, .btn-solid, .btn-ghost, .btn-submit, .btn-auth-submit, .btn-whatsapp) {
+    --btn-accent: var(--color-primary);
+    --btn-fill-strength: 60%;
+    --btn-text: #fff;
+    --btn-text-hover: var(--color-primary);
+    --btn-angle: 45deg;
+
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-sizing: border-box;
+    padding: 12px 24px;
+    font-family: var(--font-label);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    text-align: center;
+    color: var(--btn-text);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    box-shadow: none;
+    cursor: pointer;
+    transition: color 0.5s ease, transform 0.15s ease;
+
+    /* Las dos capas */
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        border: 1px solid color-mix(in srgb, var(--btn-accent) 70%, transparent);
+        background-color: color-mix(in srgb, var(--btn-accent) var(--btn-fill-strength), transparent);
+        transition: transform 0.5s ease, background-color 0.5s ease;
+    }
+
+    &:active { transform: scale(0.98); }
+
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Teclado: mismo efecto + contorno visible */
+    &:focus-visible { outline: 2px solid var(--btn-accent); outline-offset: 4px; color: var(--btn-text-hover); }
+    &:focus-visible::before { transform: rotate(calc(var(--btn-angle) * -1)); background-color: transparent; }
+    &:focus-visible::after  { transform: rotate(var(--btn-angle)); background-color: transparent; }
+
+    /* Mouse (no se queda "pegado" en pantallas táctiles) */
+    @media (hover: hover) {
+        &:hover { color: var(--btn-text-hover); }
+        &:hover::before { transform: rotate(calc(var(--btn-angle) * -1)); background-color: transparent; }
+        &:hover::after  { transform: rotate(var(--btn-angle)); background-color: transparent; }
+    }
+
+    /* Accesibilidad: sin animación si el usuario lo pidió en su sistema */
+    @media (prefers-reduced-motion: reduce) {
+        &, &::before, &::after { transition: none; }
+        &:hover::before, &:hover::after,
+        &:focus-visible::before, &:focus-visible::after { transform: none; }
+    }
+}
+
+/* ----- Variantes ----- */
+.btn-primary {
+    --btn-accent: var(--color-primary-container);
+    --btn-text: var(--color-on-primary-container);
+    --btn-text-hover: var(--color-on-primary-container);
+    padding: 16px 40px;
+    font-family: var(--font-display);
+    font-size: 20px;
+}
+
+.btn-auth-submit {
+    --btn-accent: var(--color-primary-container);
+    --btn-text: var(--color-on-primary-container);
+    --btn-text-hover: var(--color-on-primary-container);
+    width: 100%;
+    margin-top: 8px;
+    padding: 14px;
+    font-family: var(--font-display);
+    font-size: 18px;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 16px;
+    font-family: var(--font-display);
+    font-size: 20px;
+}
+
+.btn-ghost {
+    --btn-fill-strength: 12%;
+    --btn-text: var(--color-on-surface);
+    --btn-text-hover: var(--color-primary);
+}
+
+.btn-whatsapp {
+    --btn-accent: #1d9e4f;
+    --btn-text-hover: #1d9e4f;
+    margin-top: 12px;
+}
+
+/* Botón sobre fondo oscuro (sección final de Conócenos) */
+.about-cta .btn-primary {
+    --btn-accent: #fff;
+    --btn-text: var(--color-primary);
+    --btn-text-hover: #fff;
+}

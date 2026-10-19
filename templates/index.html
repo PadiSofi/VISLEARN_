@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Inicio{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/home.css' %}">{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero__bg" data-parallax="0.25">
+        <img src="{% static 'img/hero-biblioteca.jpg' %}" alt="Biblioteca universitaria moderna con estudiantes">
+        <div class="hero__overlay"></div>
+    </div>
+    <div class="hero__content" data-scroll-out>
+        <div class="hero__text">
+            <h1 class="hero__title" data-split>Tu camino hacia oportunidades internacionales comienza aquí</h1>
+            <p class="hero__subtitle" data-reveal="up" style="--reveal-delay:700ms">VisLearn te acompaña en cada etapa de tu proceso de visa mediante asesoría, seguimiento y gestión documental especializada.</p>
+            <div class="hero__actions" data-reveal="up" style="--reveal-delay:900ms">
+                <a href="{% url 'usuarios:registro' %}" class="btn-primary">Registrarme</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="info-ticker">
+    <div class="info-ticker__inner" data-reveal="fade">
+        <div class="info-ticker__item"><span>Gestión de Visas</span><span class="info-ticker__dot"></span></div>
+        <div class="info-ticker__item"><span>Asesoría Académica</span><span class="info-ticker__dot"></span></div>
+        <div class="info-ticker__item"><span>Seguimiento de Trámites</span><span class="info-ticker__dot"></span></div>
+        <div class="info-ticker__item"><span>Alianza SENA-ADSO</span><span class="info-ticker__dot"></span></div>
+        <div class="info-ticker__item"><span>Movilidad Internacional</span></div>
+    </div>
+</section>
+
+<section class="benefits">
+    <div class="benefits__grid" data-reveal-stagger="up">
+        <div class="benefit-card">
+            <div class="benefit-card__icon"><span class="material-symbols-outlined">folder_open</span></div>
+            <h3 class="benefit-card__title">Gestión de Documentos</h3>
+            <p class="benefit-card__text">Organiza y almacena de forma segura todos los documentos requeridos para tu solicitud en un solo lugar.</p>
+        </div>
+        <div class="benefit-card">
+            <div class="benefit-card__icon"><span class="material-symbols-outlined">monitoring</span></div>
+            <h3 class="benefit-card__title">Seguimiento Real</h3>
+            <p class="benefit-card__text">Consulta el estado de tu proceso en tiempo real y recibe actualizaciones directas de nuestros expertos.</p>
+        </div>
+        <div class="benefit-card">
+            <div class="benefit-card__icon"><span class="material-symbols-outlined">school</span></div>
+            <h3 class="benefit-card__title">Asesorías Expertas</h3>
+            <p class="benefit-card__text">Agenda citas personalizadas con asesores especializados en trámites de visa estudiantil internacional.</p>
+        </div>
+        <div class="benefit-card">
+            <div class="benefit-card__icon"><span class="material-symbols-outlined">notifications_active</span></div>
+            <h3 class="benefit-card__title">Alertas y Notificaciones</h3>
+            <p class="benefit-card__text">Recibe avisos sobre documentos pendientes, fechas importantes y cambios en el estado de tu proceso.</p>
+        </div>
+    </div>
+</section>
+
+{% if stats.ofertas or stats.paises or stats.articulos %}
+<section class="stats-strip">
+    <div class="stats-strip__inner" data-reveal-stagger="up">
+        {% if stats.ofertas %}
+            <div class="stat"><span class="stat__value" data-count-to="{{ stats.ofertas }}">{{ stats.ofertas }}</span><span class="stat__label">Ofertas laborales activas</span></div>
+        {% endif %}
+        {% if stats.paises %}
+            <div class="stat"><span class="stat__value" data-count-to="{{ stats.paises }}">{{ stats.paises }}</span><span class="stat__label">Países con oportunidades</span></div>
+        {% endif %}
+        {% if stats.articulos %}
+            <div class="stat"><span class="stat__value" data-count-to="{{ stats.articulos }}">{{ stats.articulos }}</span><span class="stat__label">Artículos en el blog</span></div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+
+<section class="story" id="proceso" data-story style="--story-steps: 6;">
+    <div class="story__sticky">
+        <header class="story__header" data-reveal="up">
+            <h2 class="section-title">Tu Viaje con VisLearn</h2>
+            <p class="section-subtitle">Hemos simplificado el complejo mundo de las visas estudiantiles en un proceso claro de seis pasos diseñados para tu éxito.</p>
+        </header>
+
+        <div class="story__stage">
+            <ol class="story__rail">
+                <li><button type="button" class="story__rail-item is-active"><span class="story__dot">1</span><span class="story__rail-label">Registro</span></button></li>
+                <li><button type="button" class="story__rail-item"><span class="story__dot">2</span><span class="story__rail-label">Carga</span></button></li>
+                <li><button type="button" class="story__rail-item"><span class="story__dot">3</span><span class="story__rail-label">Solicitud</span></button></li>
+                <li><button type="button" class="story__rail-item"><span class="story__dot">4</span><span class="story__rail-label">Revisión</span></button></li>
+                <li><button type="button" class="story__rail-item"><span class="story__dot">5</span><span class="story__rail-label">Seguimiento</span></button></li>
+                <li><button type="button" class="story__rail-item"><span class="story__dot"><span class="material-symbols-outlined" style="font-size:20px;">flight_takeoff</span></span><span class="story__rail-label">Resultado</span></button></li>
+            </ol>
+
+            <div class="story__panels">
+                <article class="story__panel is-active">
+                    <span class="story__panel-number" aria-hidden="true">01</span>
+                    <div class="story__panel-icon"><span class="material-symbols-outlined">person_add</span></div>
+                    <h3 class="story__panel-title">Registro</h3>
+                    <p class="story__panel-lead">Crea tu perfil académico y define tu destino.</p>
+                    <p class="story__panel-text">Completa tus datos personales, tu programa de formación y el país al que quieres ir. Es el punto de partida de todo tu expediente.</p>
+                </article>
+                <article class="story__panel">
+                    <span class="story__panel-number" aria-hidden="true">02</span>
+                    <div class="story__panel-icon"><span class="material-symbols-outlined">upload_file</span></div>
+                    <h3 class="story__panel-title">Carga</h3>
+                    <p class="story__panel-lead">Sube los documentos básicos para revisión inicial.</p>
+                    <p class="story__panel-text">Pasaporte, documento de identidad, certificados académicos y demás soportes, en PDF, JPG o PNG, organizados en un solo lugar.</p>
+                </article>
+                <article class="story__panel">
+                    <span class="story__panel-number" aria-hidden="true">03</span>
+                    <div class="story__panel-icon"><span class="material-symbols-outlined">assignment</span></div>
+                    <h3 class="story__panel-title">Solicitud</h3>
+                    <p class="story__panel-lead">Iniciamos formalmente el trámite institucional.</p>
+                    <p class="story__panel-text">Con tu expediente completo, avanzas a la etapa de solicitud de visa con la guía de tu instructor.</p>
+                </article>
+                <article class="story__panel">
+                    <span class="story__panel-number" aria-hidden="true">04</span>
+                    <div class="story__panel-icon"><span class="material-symbols-outlined">fact_check</span></div>
+                    <h3 class="story__panel-title">Revisión</h3>
+                    <p class="story__panel-lead">Verificación exhaustiva por parte de expertos.</p>
+                    <p class="story__panel-text">Tu instructor revisa cada documento, deja observaciones y te avisa si algo requiere corrección antes de continuar.</p>
+                </article>
+                <article class="story__panel">
+                    <span class="story__panel-number" aria-hidden="true">05</span>
+                    <div class="story__panel-icon"><span class="material-symbols-outlined">monitoring</span></div>
+                    <h3 class="story__panel-title">Seguimiento</h3>
+                    <p class="story__panel-lead">Acompañamiento durante todo el trámite.</p>
+                    <p class="story__panel-text">Consulta en tu línea de tiempo en qué etapa va tu proceso y recibe una notificación con cada avance.</p>
+                </article>
+                <article class="story__panel">
+                    <span class="story__panel-number" aria-hidden="true">06</span>
+                    <div class="story__panel-icon"><span class="material-symbols-outlined">flight_takeoff</span></div>
+                    <h3 class="story__panel-title">Resultado</h3>
+                    <p class="story__panel-lead">¡Tu visa aprobada y lista para tu viaje!</p>
+                    <p class="story__panel-text">El objetivo de todo el recorrido: llegar a tu destino con tu proceso en regla y con el respaldo de tu instructor.</p>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="cta-section__inner" data-reveal-alternate>
+        <div class="contact-card">
+            <h2 class="section-title" style="font-size:28px; text-align:left;">Contáctanos</h2>
+            <form method="post" action="{% url 'core:contacto' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label">Nombre</label>
+                    <input class="form-input" type="text" name="nombre" placeholder="Tu nombre">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Correo Electrónico</label>
+                    <input class="form-input" type="email" name="email" placeholder="tu@email.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Asunto</label>
+                    <input class="form-input" type="text" name="asunto" placeholder="Asunto de tu mensaje">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mensaje</label>
+                    <textarea class="form-textarea" name="mensaje" rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
+                </div>
+                <button class="btn-submit" type="submit">Enviar Mensaje</button>
+            </form>
+        </div>
+        <div class="map-placeholder">
+            <div class="map-placeholder__icon">
+                <span class="material-symbols-outlined" style="color:var(--color-primary); font-size:32px;">location_on</span>
+            </div>
+            <h3 style="font-family:var(--font-display); color:var(--color-primary); margin-bottom:8px;">Sede ADSO SENA</h3>
+            <p style="color:var(--color-on-surface-variant); margin-bottom:8px;">Calle 57 # 8 - 69, Bogotá, Colombia</p>
+            <div class="map-placeholder__box">Mapa Interactivo Placeholder</div>
+        </div>
+    </div>
+</section>
+
+<section class="academic-section">
+    <div class="academic-section__inner" data-reveal-alternate>
+        <div class="academic-section__image">
+            <img src="{% static 'img/academico-laboratorio.jpg' %}" alt="Estudiantes trabajando en un laboratorio académico" data-parallax="0.12" data-parallax-scale="1.18">
+        </div>
+        <div>
+            <span class="academic-section__badge">EXPERIENCIA SENA ADSO</span>
+            <h2 class="academic-section__title">Formación que trasciende fronteras</h2>
+            <p class="academic-section__text">Nuestra metodología combina el rigor técnico con la calidez humana. Entendemos que cada proceso de visa es un proyecto de vida, y por eso dedicamos atención personalizada a cada detalle de tu documentación y aplicación.</p>
+            <ul class="academic-section__list">
+                <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <span>Soporte técnico 24/7 para el cargue de documentos.</span>
+                </li>
+                <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <span>Alianza directa con instituciones educativas globales.</span>
+                </li>
+                <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <span>Simulacros de entrevistas consulares con expertos.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials">
+    <div class="testimonials__inner">
+        <div class="testimonials__header" data-reveal="up">
+            <h2 class="section-title">Lo que dicen nuestros egresados</h2>
+        </div>
+        <div class="testimonials__grid" data-reveal-stagger="up">
+            <div class="testimonial-card">
+                <div class="testimonial-card__header">
+                    <div class="testimonial-card__avatar"><span class="material-symbols-outlined">person</span></div>
+                    <div>
+                        <h4 class="testimonial-card__name">Carlos Ruiz</h4>
+                        <p class="testimonial-card__role">Desarrollador en Berlín</p>
+                    </div>
+                </div>
+                <p class="testimonial-card__quote">"Gracias a VisLearn y la alianza ADSO, ahora trabajo como desarrollador en Berlín. El proceso de visa fue impecable."</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-card__header">
+                    <div class="testimonial-card__avatar"><span class="material-symbols-outlined">person</span></div>
+                    <div>
+                        <h4 class="testimonial-card__name">Elena Gómez</h4>
+                        <p class="testimonial-card__role">Ingeniera en Toronto</p>
+                    </div>
+                </div>
+                <p class="testimonial-card__quote">"La asesoría experta me dio la confianza que necesitaba para mi entrevista consular. ¡Ya estoy en Toronto!"</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-card__header">
+                    <div class="testimonial-card__avatar"><span class="material-symbols-outlined">person</span></div>
+                    <div>
+                        <h4 class="testimonial-card__name">Mateo López</h4>
+                        <p class="testimonial-card__role">Aprendiz SENA</p>
+                    </div>
+                </div>
+                <p class="testimonial-card__quote">"Excelente acompañamiento en cada paso. VisLearn entiende las necesidades de los aprendices SENA."</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

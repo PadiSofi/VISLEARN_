@@ -1,0 +1,242 @@
+/* ===== SCROLLYTELLING ===== */
+
+/* ----- Barra de progreso de lectura ----- */
+.scroll-progress {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    z-index: 60;
+    transform-origin: left;
+    transform: scaleX(0);
+    background: linear-gradient(90deg, var(--color-secondary-container), var(--color-primary-container), var(--color-primary));
+    pointer-events: none;
+}
+
+/* ----- Revelado al hacer scroll ----- */
+.js [data-reveal] {
+    opacity: 0;
+    will-change: opacity, transform;
+    transition:
+        opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms),
+        transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms);
+}
+.js [data-reveal="up"]    { transform: translateY(48px); }
+.js [data-reveal="down"]  { transform: translateY(-48px); }
+.js [data-reveal="left"]  { transform: translateX(-64px); }
+.js [data-reveal="right"] { transform: translateX(64px); }
+.js [data-reveal="zoom"]  { transform: scale(0.9); }
+.js [data-reveal="fade"]  { transform: none; }
+.js [data-reveal].is-revealed { opacity: 1; transform: none; }
+
+/* ----- Titulares palabra por palabra ----- */
+.js [data-split] .split-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+}
+.js [data-split] .split-word__inner {
+    display: inline-block;
+    transform: translateY(115%);
+    transition: transform 1s cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i, 0) * 70ms + 150ms);
+}
+.js [data-split].is-revealed .split-word__inner { transform: none; }
+
+/* ----- Parallax ----- */
+.parallax-layer {
+    position: absolute;
+    inset: -18% 0;
+    background-size: cover;
+    background-position: center;
+    will-change: transform;
+}
+.hero [data-parallax] { inset: -15% 0; will-change: transform; }
+
+/* Entrada cinematográfica del hero: la imagen "se asienta" */
+@media (prefers-reduced-motion: no-preference) {
+    .hero__bg img { animation: hero-settle 2.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+}
+@keyframes hero-settle {
+    from { transform: scale(1.14); }
+    to   { transform: scale(1); }
+}
+
+.about-hero { overflow: hidden; }
+
+/* ----- Servicios: el ícono "salta" al aparecer la fila ----- */
+.service-row.is-revealed .service-row__icon { animation: icon-pop 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both; }
+@keyframes icon-pop {
+    0%   { transform: scale(0.4) rotate(-12deg); opacity: 0; }
+    70%  { transform: scale(1.08) rotate(2deg); opacity: 1; }
+    100% { transform: none; opacity: 1; }
+}
+
+/* ----- Inicio: franja de cifras reales ----- */
+.stats-strip { background: var(--color-primary); color: #fff; padding: 56px var(--spacing-margin-mobile); }
+.stats-strip__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 32px;
+    text-align: center;
+}
+.stat__value { display: block; font-family: var(--font-display); font-size: 56px; line-height: 1; color: var(--color-secondary-container); }
+.stat__label { display: block; margin-top: 8px; font-family: var(--font-label); font-size: 14px; opacity: 0.9; }
+
+/* ----- Inicio: escena fija del recorrido ----- */
+.story { position: relative; background: var(--color-surface-container-low); }
+.story__sticky { padding: 48px 0 32px; }
+.story__header { text-align: center; max-width: 720px; margin: 0 auto; padding: 0 var(--spacing-margin-mobile) 32px; }
+.story__stage {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--spacing-margin-mobile);
+    box-sizing: border-box;
+}
+
+/* Con JavaScript: la escena se fija y el scroll avanza los pasos */
+.js .story {
+    height: calc(100vh + (var(--story-steps) - 1) * 70vh);
+    height: calc(100svh + (var(--story-steps) - 1) * 70svh);
+}
+.js .story__sticky {
+    position: sticky;
+    top: 64px;
+    height: calc(100vh - 64px);
+    height: calc(100svh - 64px);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Riel de pasos */
+.story__rail {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+.story__rail::before,
+.story__rail::after { content: ''; position: absolute; left: 20px; right: 20px; top: 19px; height: 2px; }
+.story__rail::before { background: var(--color-outline-variant); }
+.story__rail::after {
+    background: var(--color-primary);
+    transform-origin: left;
+    transform: scaleX(var(--story-progress, 0));
+}
+.story__rail-item {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-label);
+    font-size: 15px;
+    color: var(--color-on-surface-variant);
+}
+.story__dot {
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--color-surface-container-lowest);
+    border: 2px solid var(--color-outline-variant);
+    font-weight: 700;
+    font-size: 14px;
+    transition: all 0.4s ease;
+}
+.story__rail-label { display: none; transition: color 0.3s ease; }
+.story__rail-item.is-done .story__dot { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+.story__rail-item.is-active .story__dot {
+    background: var(--color-secondary-container);
+    border-color: var(--color-secondary-container);
+    color: var(--color-on-secondary-container);
+    transform: scale(1.15);
+}
+.story__rail-item.is-active .story__rail-label { color: var(--color-primary); font-weight: 700; }
+.story__rail-item:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 4px; border-radius: 999px; }
+
+/* Paneles: todos ocupan la misma celda y se cruzan con fundido */
+.story__panels { display: grid; }
+.story__panel {
+    grid-area: 1 / 1;
+    position: relative;
+    overflow: hidden;
+    background: var(--color-surface-container-lowest);
+    border-top: 2px solid var(--color-secondary-container);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    padding: 32px;
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    pointer-events: none;
+    transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.story__panel.is-past { transform: translateY(-40px) scale(0.98); }
+.story__panel.is-active { opacity: 1; transform: none; pointer-events: auto; }
+.story__panel-number {
+    position: absolute;
+    top: -8px; right: 24px;
+    font-family: var(--font-display);
+    font-size: 80px;
+    line-height: 1;
+    font-weight: 700;
+    color: var(--color-secondary-container);
+    opacity: 0.45;
+    pointer-events: none;
+    user-select: none;
+}
+.story__panel-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--color-secondary-container);
+    color: var(--color-on-secondary-container);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+}
+.story__panel-icon .material-symbols-outlined { font-size: 32px; }
+.story__panel-title { font-family: var(--font-display); font-size: 32px; color: var(--color-primary); margin: 0 0 8px; }
+.story__panel-lead { font-family: var(--font-display); font-size: 18px; color: var(--color-on-surface); margin: 0 0 12px; }
+.story__panel-text { color: var(--color-on-surface-variant); line-height: 1.7; margin: 0; max-width: 520px; }
+
+@media (max-width: 767px) {
+    .story__header .section-subtitle { display: none; }
+    .story__header { padding-bottom: 16px; }
+}
+@media (min-width: 768px) {
+    .story__stage { grid-template-columns: 260px 1fr; gap: 64px; align-items: center; padding: 0 var(--spacing-margin-desktop); }
+    .story__rail { flex-direction: column; justify-content: flex-start; gap: 0; }
+    .story__rail::before,
+    .story__rail::after { left: 19px; right: auto; top: 30px; bottom: 30px; width: 2px; height: auto; }
+    .story__rail::after { transform-origin: top; transform: scaleY(var(--story-progress, 0)); }
+    .story__rail-label { display: block; }
+    .story__panel { padding: 48px; }
+    .story__panel-number { font-size: 120px; }
+}
+
+/* Sin JavaScript: los pasos se muestran como una lista normal */
+html:not(.js) .story__panels { gap: 16px; }
+html:not(.js) .story__panel { grid-area: auto; opacity: 1; transform: none; pointer-events: auto; }
+html:not(.js) .story__rail { display: none; }
+
+/* Usuarios que pidieron reducir el movimiento */
+@media (prefers-reduced-motion: reduce) {
+    .js [data-reveal] { transition: none; }
+    .js [data-split] .split-word__inner { transform: none; transition: none; }
+    .story__panel, .story__dot { transition: none; }
+}

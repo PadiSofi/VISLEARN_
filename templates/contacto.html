@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Contacto{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/contacto.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="contact-page" data-reveal-alternate>
+    <div>
+        <h1 class="contact-info__title">Contáctanos</h1>
+        <p class="contact-info__text">Estamos aquí para resolver tus dudas y acompañarte en tu proceso educativo. Ponte en contacto con nosotros a través de los siguientes canales.</p>
+
+        <div class="contact-channel">
+            <div class="contact-channel__icon"><span class="material-symbols-outlined">mail</span></div>
+            <div>
+                <p class="contact-channel__label">Correo Electrónico</p>
+                <a href="mailto:soporte@vislearn.edu.co">soporte@vislearn.edu.co</a>
+            </div>
+        </div>
+        <div class="contact-channel">
+            <div class="contact-channel__icon"><span class="material-symbols-outlined">call</span></div>
+            <div>
+                <p class="contact-channel__label">Teléfono</p>
+                <a href="tel:+576015550123">+57 (601) 555-0123</a>
+            </div>
+        </div>
+        <a class="btn-whatsapp" href="https://wa.me/576015550123" target="_blank" rel="noopener">
+            <span class="material-symbols-outlined" style="font-size:20px;">chat</span> Escríbenos por WhatsApp
+        </a>
+    </div>
+
+    <div class="contact-form-card">
+        <h3>Envíanos un mensaje</h3>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% for error in field.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+                </div>
+            {% endfor %}
+            <button class="btn-submit" type="submit">Enviar Mensaje</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

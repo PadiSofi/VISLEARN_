@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Iniciar Sesión{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/auth.css' %}">{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-page__bg" style="background-image: url('{% static 'img/biblioteca-login.jpg' %}');"></div>
+    <div class="auth-card">
+        <div class="auth-card__header">
+            <h1 class="auth-card__title">Bienvenido</h1>
+            <p class="auth-card__subtitle">Accede a tu cuenta en VisLearn</p>
+        </div>
+
+        {% if form.non_field_errors %}
+            <ul class="auth-errorlist">
+                {% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+        {% endif %}
+
+        <form class="auth-form" method="post">
+            {% csrf_token %}
+            <div class="auth-field">
+                <label class="auth-label" for="{{ form.username.id_for_label }}">Número de documento</label>
+                {{ form.username }}
+            </div>
+            <div class="auth-field">
+                <div class="auth-field__row">
+                    <label class="auth-label" for="{{ form.password.id_for_label }}">Contraseña</label>
+                    <a class="auth-link" href="{% url 'usuarios:password_reset' %}">¿Olvidaste tu contraseña?</a>
+                </div>
+                {{ form.password }}
+            </div>
+            <button class="btn-auth-submit" type="submit">Iniciar Sesión</button>
+        </form>
+
+        <div class="auth-divider">o</div>
+
+        <p class="auth-footer-text">
+            ¿No tienes una cuenta? <a href="{% url 'usuarios:registro' %}">Regístrate</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

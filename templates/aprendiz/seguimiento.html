@@ -1,0 +1,100 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Seguimiento y Trámites{% endblock %}
+{% block dashboard_css %}<link rel="stylesheet" href="{% static 'css/seguimiento.css' %}">{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <section class="doc-header">
+        <span class="doc-header__eyebrow"><span class="material-symbols-outlined" style="font-size:16px;">verified_user</span> Expediente de {{ user.get_full_name }}</span>
+        <h1 class="doc-header__title">Centro de Seguimiento y Trámites</h1>
+        <p class="doc-header__desc">Consulta el estado de tu expediente documental y el avance de tu proceso de movilidad.</p>
+    </section>
+
+    <h2 class="section-title" style="text-align:left; font-size:24px;">Checklist de Documentación Requerida</h2>
+    <div class="doc-format-hint">
+        <span class="material-symbols-outlined" style="font-size:18px;">info</span>
+        Formatos permitidos: PDF, JPG, PNG (máx. 10MB)
+    </div>
+
+    <div class="doc-grid">
+        {% for doc in documentos %}
+            <div class="doc-card">
+                <div>
+                    <div class="doc-card__top">
+                        <div class="doc-card__icon"><span class="material-symbols-outlined">{{ doc.icono }}</span></div>
+                        <span class="doc-badge doc-badge--{{ doc.estado }}">
+                            <span class="material-symbols-outlined" style="font-size:14px;">
+                                {% if doc.estado == 'aprobado' %}check_circle{% elif doc.estado == 'en_revision' %}pending{% elif doc.estado == 'requiere_correccion' %}error{% else %}schedule{% endif %}
+                            </span>
+                            {{ doc.get_estado_display }}
+                        </span>
+                    </div>
+                    <h3 class="doc-card__title">{{ doc.get_tipo_documento_display }}</h3>
+                    {% if doc.observaciones_instructor %}
+                        <div class="doc-card__obs"><strong>Observación:</strong> {{ doc.observaciones_instructor }}</div>
+                    {% endif %}
+                </div>
+                <div class="doc-card__actions">
+                    {% if doc.archivo %}
+                        <a href="{{ doc.archivo.url }}" target="_blank" class="btn-ghost">
+                            <span class="material-symbols-outlined" style="font-size:18px;">visibility</span> Ver Archivo
+                        </a>
+                    {% endif %}
+                    <label class="btn-solid" style="cursor:pointer;">
+                        <span class="material-symbols-outlined" style="font-size:18px;">upload_file</span>
+                        {% if doc.archivo %}Reemplazar{% else %}Subir{% endif %}
+                        <form method="post" action="{% url 'aprendiz:subir_documento' doc.pk %}" enctype="multipart/form-data" style="display:none;" id="form-doc-{{ doc.pk }}">
+                            {% csrf_token %}
+                            <input type="file" name="archivo" class="doc-card__file-input" onchange="document.getElementById('form-doc-{{ doc.pk }}').submit();">
+                        </form>
+                        <input type="file" onchange="
+                            let f = document.getElementById('form-doc-{{ doc.pk }}');
+                            let realInput = f.querySelector('input[type=file]');
+                            realInput.files = this.files;
+                            f.submit();
+                        " style="display:none;">
+                    </label>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<section class="timeline-proceso">
+    <div class="timeline-proceso__header">
+        <div>
+            <h2 class="section-title" style="text-align:left; font-size:24px; margin-bottom:4px;">Línea de Tiempo del Proceso</h2>
+            {% if perfil.pais_destino %}<p style="color:var(--color-on-surface-variant); margin:0;">Destino: {{ perfil.pais_destino }}</p>{% endif %}
+        </div>
+        <div class="timeline-proceso__progress">
+            <div class="timeline-proceso__progress-bar">
+                <div class="timeline-proceso__progress-fill" style="width: {{ perfil.porcentaje_avance_proceso }}%;"></div>
+            </div>
+            <span class="timeline-proceso__progress-value">{{ perfil.porcentaje_avance_proceso }}%</span>
+        </div>
+    </div>
+
+    <ul class="etapas-list">
+        {% for etapa in etapas %}
+            <li class="etapa-item etapa-item--{{ etapa.estado }}">
+                <div class="etapa-item__circle">
+                    {% if etapa.estado == 'completado' %}
+                        <span class="material-symbols-outlined" style="font-size:20px;">check</span>
+                    {% else %}
+                        {{ etapa.numero_etapa }}
+                    {% endif %}
+                </div>
+                <div class="etapa-item__body">
+                    <h4 class="etapa-item__title">{{ etapa.nombre_etapa }}</h4>
+                    <span class="etapa-item__estado">{{ etapa.get_estado_display }}</span>
+                    {% if etapa.observaciones %}
+                        <p class="etapa-item__obs">{{ etapa.observaciones }}</p>
+                    {% endif %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

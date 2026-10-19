@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Registro{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/auth.css' %}">{% endblock %}
+
+{% block content %}
+<div class="auth-page" style="padding-top: 48px; padding-bottom: 48px;">
+    <div class="auth-card" style="max-width: 480px;">
+        <div class="auth-card__header">
+            <h1 class="auth-card__title">Crea tu cuenta</h1>
+            <p class="auth-card__subtitle">Comienza tu proceso de movilidad estudiantil</p>
+        </div>
+
+        {% if form.non_field_errors %}
+            <ul class="auth-errorlist">
+                {% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+        {% endif %}
+
+        <form class="auth-form" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="auth-field">
+                    <label class="auth-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <span style="color:#ba1a1a; font-size:12px;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <button class="btn-auth-submit" type="submit">Registrarme</button>
+        </form>
+
+        <p class="auth-footer-text">
+            ¿Ya tienes cuenta? <a href="{% url 'usuarios:login' %}">Inicia sesión</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

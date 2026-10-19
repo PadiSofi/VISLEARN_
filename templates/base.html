@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}VisLearn{% endblock %}</title>
+
+    <script>document.documentElement.classList.add('js');</script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/scrolly.css' %}">
+    {% block extra_css %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/buttons.css' %}">
+</head>
+<body>
+    {% block header %}
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a href="{% url 'core:inicio' %}" class="site-logo">VisLearn</a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <nav class="main-nav" id="main-nav">
+                <a href="{% url 'core:inicio' %}" class="nav-link">Inicio</a>
+                <a href="{% url 'core:servicios' %}" class="nav-link">Servicios</a>
+                <a href="{% url 'core:conocenos' %}" class="nav-link">Nuestra Misión</a>
+                <a href="{% url 'core:blog' %}" class="nav-link">Blog</a>
+                <a href="{% url 'core:contacto' %}" class="nav-link">Contacto</a>
+                {% if user.is_authenticated %}
+                    {% if user.is_instructor %}
+                        <a href="{% url 'instructor:lista_aprendices' %}" class="nav-link">Panel de Instructor</a>
+                    {% else %}
+                        <a href="{% url 'aprendiz:perfil' %}" class="nav-link">Mi Perfil</a>
+                    {% endif %}
+                        <a href="{% url 'usuarios:logout' %}" class="nav-link">Cerrar sesión</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+    {% endblock %}
+
+    <main style="margin-top: 80px;">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block footer %}
+    <footer class="site-footer">
+        <div class="site-footer__grid" data-reveal-stagger="up">
+            <div class="site-footer__grid">
+                <div>
+                    <div class="footer-brand">VisLearn</div>
+                    <p style="color: var(--color-on-surface-variant); font-size: 14px;">
+                        Liderando el futuro de la movilidad estudiantil internacional con tecnología y compromiso humano.
+                    </p>
+                </div>
+                <div>
+                    <h5 class="footer-heading">Institucional</h5>
+                    <ul class="footer-list">
+                        <li><a href="#" class="footer-link">SENA</a></li>
+                        <li><a href="#" class="footer-link">ADSO Portal</a></li>
+                        <li><a href="#" class="footer-link">Certificaciones</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="footer-heading">Legal</h5>
+                    <ul class="footer-list">
+                        <li><a href="#" class="footer-link">Privacidad</a></li>
+                        <li><a href="#" class="footer-link">Términos de Uso</a></li>
+                        <li><a href="#" class="footer-link">Cookies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="footer-heading">Contacto</h5>
+                    <p style="color: var(--color-on-surface-variant); font-size: 12px;">soporte@vislearn.edu.co</p>
+                    <p style="color: var(--color-on-surface-variant); font-size: 12px;">+57 (601) 555-0123</p>
+                </div>
+            </div>
+        </div>
+        <div class="site-footer__bottom">© 2026 VisLearn SENA ADSO. Todos los derechos reservados.</div>
+    </footer>
+    {% endblock %}
+
+    <script src="{% static 'js/vislearn.js' %}"></script>
+    <script src="{% static 'js/scrolly.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,64 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Mis Postulaciones{% endblock %}
+{% block dashboard_css %}<link rel="stylesheet" href="{% static 'css/ofertas.css' %}">{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="jobs-header">
+        <h1 class="jobs-header__title">Mis Postulaciones</h1>
+        <p class="jobs-header__sub">Guarda ofertas y sigue el estado de cada postulación.</p>
+    </div>
+
+    <nav class="post-tabs">
+        {% for valor, nombre, total in tabs %}
+            <a href="{% if valor %}?estado={{ valor }}{% else %}{% url 'ofertas:mis_postulaciones' %}{% endif %}"
+               class="post-tab {% if valor == estado_actual %}is-active{% endif %}">{{ nombre }} <span>{{ total }}</span></a>
+        {% endfor %}
+    </nav>
+
+    {% for p, form in items %}
+        <div class="post-card">
+            <div class="job-card__top">
+                <div>
+                    <h2 class="job-card__title"><a class="post-card__title-link" href="{% url 'ofertas:detalle' p.oferta.pk %}">{{ p.oferta.titulo }}</a></h2>
+                    <p class="job-card__company">{{ p.oferta.empresa }} · {% if p.oferta.ciudad %}{{ p.oferta.ciudad }}, {% endif %}{{ p.oferta.pais }}</p>
+                </div>
+                <span class="post-badge post-badge--{{ p.estado }}">{{ p.get_estado_display }}</span>
+            </div>
+            <p class="post-card__meta">Última actualización: {{ p.fecha_actualizacion|date:"d M Y" }}</p>
+            {% if not p.oferta.esta_vigente %}<p class="post-card__warn">Esta convocatoria ya no está vigente.</p>{% endif %}
+
+            {% if p.estado == 'guardada' %}
+                <div class="post-card__actions">
+                    <a href="{% url 'ofertas:detalle' p.oferta.pk %}" class="btn-ghost">Ver oferta</a>
+                    {% if p.oferta.esta_vigente %}
+                        <form method="post" action="{% url 'ofertas:postularme' p.oferta.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-solid">Postularme</button>
+                        </form>
+                    {% endif %}
+                    <form method="post" action="{% url 'ofertas:quitar_guardada' p.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-ghost">Quitar</button>
+                    </form>
+                </div>
+            {% else %}
+                <form class="post-form" method="post" action="{% url 'ofertas:actualizar_postulacion' p.pk %}">
+                    {% csrf_token %}
+                    {{ form.estado }}
+                    {{ form.notas }}
+                    <button type="submit" class="btn-solid">Guardar</button>
+                </form>
+            {% endif %}
+        </div>
+    {% empty %}
+        <div class="jobs-empty">
+            <span class="material-symbols-outlined" style="font-size:48px;">work_history</span>
+            <p>Aún no tienes postulaciones en esta vista.</p>
+            <a href="{% url 'ofertas:lista' %}" class="btn-solid" style="text-decoration:none;">Explorar ofertas</a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

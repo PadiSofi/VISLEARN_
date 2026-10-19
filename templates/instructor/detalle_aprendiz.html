@@ -1,0 +1,79 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - {{ perfil.usuario.get_full_name }}{% endblock %}
+{% block dashboard_css %}
+<link rel="stylesheet" href="{% static 'css/instructor.css' %}">
+<link rel="stylesheet" href="{% static 'css/ofertas.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <a href="{% url 'instructor:lista_aprendices' %}" class="back-link">
+        <span class="material-symbols-outlined" style="font-size:18px;">arrow_back</span> Volver a Mis Aprendices
+    </a>
+
+    <div class="detalle-header">
+        <div>
+            <h1 class="detalle-header__name">{{ perfil.usuario.get_full_name }}</h1>
+            <p class="detalle-header__meta">{{ perfil.usuario.numero_documento }} • {{ perfil.usuario.email }} • Destino: {{ perfil.pais_destino|default:"Sin definir" }}</p>
+        </div>
+        <div class="instr-progress-mini">
+            <div class="instr-progress-mini__bar" style="width:100px;">
+                <div class="instr-progress-mini__fill" style="width: {{ perfil.porcentaje_avance_proceso }}%;"></div>
+            </div>
+            <span>{{ perfil.porcentaje_avance_proceso }}% del proceso</span>
+        </div>
+    </div>
+
+    <h2 class="section-title" style="text-align:left; font-size:20px;">Documentos</h2>
+    {% for documento, form in documentos %}
+        <div class="review-card">
+            <div class="review-card__top">
+                <span class="review-card__title">{{ documento.get_tipo_documento_display }}</span>
+                <span class="doc-badge doc-badge--{{ documento.estado }}">{{ documento.get_estado_display }}</span>
+                {% if documento.archivo %}
+                    <a href="{{ documento.archivo.url }}" target="_blank" class="review-card__file-link">Ver archivo adjunto</a>
+                {% else %}
+                    <span style="font-size:13px; color:var(--color-on-surface-variant);">Sin archivo cargado</span>
+                {% endif %}
+            </div>
+            <form class="review-form" method="post" action="{% url 'instructor:revisar_documento' documento.pk %}">
+                {% csrf_token %}
+                {{ form.estado }}
+                {{ form.observaciones_instructor }}
+                <button type="submit" class="btn-solid">Guardar</button>
+            </form>
+        </div>
+    {% endfor %}
+
+    <h2 class="section-title" style="text-align:left; font-size:20px; margin-top:32px;">Etapas del Proceso</h2>
+    {% for etapa, form in etapas %}
+        <div class="review-card">
+            <div class="review-card__top">
+                <span class="review-card__title">{{ etapa.numero_etapa }}. {{ etapa.nombre_etapa }}</span>
+                <span class="doc-badge doc-badge--{{ etapa.estado }}">{{ etapa.get_estado_display }}</span>
+            </div>
+            <form class="review-form" method="post" action="{% url 'instructor:actualizar_etapa' etapa.pk %}">
+                {% csrf_token %}
+                {{ form.estado }}
+                {{ form.observaciones }}
+                <button type="submit" class="btn-solid">Guardar</button>
+            </form>
+        </div>
+    {% endfor %}
+
+    <h2 class="section-title" style="text-align:left; font-size:20px; margin-top:32px;">Postulaciones a ofertas laborales</h2>
+    {% for p in postulaciones %}
+        <div class="review-card">
+            <div class="review-card__top">
+                <span class="review-card__title">{{ p.oferta.titulo }} · {{ p.oferta.empresa }} ({{ p.oferta.pais }})</span>
+                <span class="post-badge post-badge--{{ p.estado }}">{{ p.get_estado_display }}</span>
+            </div>
+            {% if p.notas %}<p style="margin:0; font-size:13px; color:var(--color-on-surface-variant);">{{ p.notas }}</p>{% endif %}
+        </div>
+    {% empty %}
+        <p style="color:var(--color-on-surface-variant);">Este aprendiz aún no tiene postulaciones.</p>
+    {% endfor %}
+</div>
+{% endblock %}

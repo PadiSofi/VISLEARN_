@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Servicios{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/servicios.css' %}">{% endblock %}
+
+{% block content %}
+<section class="services-hero">
+    <h1 class="services-hero__title" data-split>Todo lo que necesitas para tu movilidad estudiantil</h1>
+    <p class="services-hero__text" data-reveal="up" style="--reveal-delay:600ms">Desde la gestión documental hasta la asesoría personalizada, VisLearn centraliza cada etapa de tu proceso de visa.</p>
+</section>
+
+<section class="services-detail" data-reveal-alternate>
+    <div class="service-row">
+        <div class="service-row__icon"><span class="material-symbols-outlined" style="font-size:36px;">folder_open</span></div>
+        <div>
+            <p class="service-row__number">Servicio 01</p>
+            <h2 class="service-row__title">Gestión de Documentos</h2>
+            <p class="service-row__text">Consulta qué documentos necesitas, súbelos en un solo lugar y da seguimiento a su estado de revisión sin perder tiempo buscando carpetas ni correos.</p>
+            <ul class="service-row__list">
+                <li><span class="material-symbols-outlined">check</span> Checklist claro de documentos requeridos</li>
+                <li><span class="material-symbols-outlined">check</span> Carga de archivos en PDF, JPG o PNG</li>
+                <li><span class="material-symbols-outlined">check</span> Historial de observaciones del instructor</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="service-row">
+        <div class="service-row__icon"><span class="material-symbols-outlined" style="font-size:36px;">monitoring</span></div>
+        <div>
+            <p class="service-row__number">Servicio 02</p>
+            <h2 class="service-row__title">Seguimiento del Proceso</h2>
+            <p class="service-row__text">Visualiza en qué etapa se encuentra tu trámite, desde el registro hasta la visa aprobada, con actualizaciones directas de tu instructor asignado.</p>
+            <ul class="service-row__list">
+                <li><span class="material-symbols-outlined">check</span> Línea de tiempo con las 10 etapas del proceso</li>
+                <li><span class="material-symbols-outlined">check</span> Porcentaje de avance en tiempo real</li>
+                <li><span class="material-symbols-outlined">check</span> Notificación cuando cambia tu estado</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="service-row">
+        <div class="service-row__icon"><span class="material-symbols-outlined" style="font-size:36px;">school</span></div>
+        <div>
+            <p class="service-row__number">Servicio 03</p>
+            <h2 class="service-row__title">Asesorías Expertas</h2>
+            <p class="service-row__text">Nuestros instructores revisan tu documentación, resuelven tus dudas y te orientan en cada decisión de tu proceso de movilidad.</p>
+            <ul class="service-row__list">
+                <li><span class="material-symbols-outlined">check</span> Retroalimentación directa por documento</li>
+                <li><span class="material-symbols-outlined">check</span> Acompañamiento personalizado por perfil</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="service-row">
+        <div class="service-row__icon"><span class="material-symbols-outlined" style="font-size:36px;">notifications_active</span></div>
+        <div>
+            <p class="service-row__number">Servicio 04</p>
+            <h2 class="service-row__title">Alertas y Notificaciones</h2>
+            <p class="service-row__text">Mantente al tanto de documentos pendientes, correcciones solicitadas y cambios en tu proceso, sin tener que estar preguntando constantemente.</p>
+            <ul class="service-row__list">
+                <li><span class="material-symbols-outlined">check</span> Estados visibles en tu panel personal</li>
+                <li><span class="material-symbols-outlined">check</span> Observaciones puntuales por parte de tu instructor</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="services-cta" data-reveal-stagger="up">
+    <h2 class="services-cta__title">¿Listo para comenzar tu proceso?</h2>
+    <a href="{% url 'usuarios:registro' %}" class="btn-primary">Registrarme</a>
+</section>
+{% endblock %}

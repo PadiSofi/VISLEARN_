@@ -1,0 +1,53 @@
+.services-hero {
+    text-align: center;
+    padding: 80px var(--spacing-margin-mobile) 48px;
+    max-width: 720px;
+    margin: 0 auto;
+}
+@media (min-width: 768px) { .services-hero { padding-top: 96px; } }
+.services-hero__title { font-family: var(--font-display); font-size: 40px; color: var(--color-primary); margin-bottom: 16px; }
+.services-hero__text { color: var(--color-on-surface-variant); font-size: 18px; line-height: 1.6; }
+
+.services-detail {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 32px var(--spacing-margin-mobile) 96px;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+}
+@media (min-width: 768px) { .services-detail { padding: 32px var(--spacing-margin-desktop) 96px; } }
+.service-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    align-items: center;
+}
+@media (min-width: 768px) { .service-row { grid-template-columns: 100px 1fr; } }
+.service-row__icon {
+    width: 80px; height: 80px;
+    background: var(--color-secondary-container);
+    color: var(--color-on-secondary-container);
+    border-radius: var(--radius-xl);
+    display: flex; align-items: center; justify-content: center;
+}
+.service-row__number {
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+}
+.service-row__title { font-family: var(--font-display); font-size: 28px; color: var(--color-primary); margin-bottom: 12px; }
+.service-row__text { color: var(--color-on-surface-variant); line-height: 1.6; margin-bottom: 16px; }
+.service-row__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.service-row__list li { display: flex; align-items: center; gap: 8px; font-family: var(--font-label); font-size: 14px; color: var(--color-on-surface); }
+.service-row__list .material-symbols-outlined { color: var(--color-primary); font-size: 18px; }
+
+.services-cta {
+    background: var(--color-surface-container-low);
+    text-align: center;
+    padding: 64px var(--spacing-margin-mobile);
+}
+.services-cta__title { font-family: var(--font-display); font-size: 28px; color: var(--color-primary); margin-bottom: 16px; }

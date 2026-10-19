@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Conócenos{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/conocenos.css' %}">{% endblock %}
+
+{% block content %}
+<section class="about-hero">
+    <div class="parallax-layer" data-parallax="0.3" style="background-image: url('{% static 'img/about-hero.jpg' %}');"></div>
+    <div class="about-hero__content" data-scroll-out>
+        <h1 class="about-hero__title" data-split>Nuestra Misión: Tu Futuro sin Fronteras</h1>
+        <p class="about-hero__subtitle" data-reveal="up" style="--reveal-delay:600ms">Acompañamos a los aprendices ADSO del SENA en su camino hacia oportunidades técnicas internacionales.</p>
+    </div>
+</section>
+
+<section class="about-what" data-reveal-alternate>
+    <div class="about-what__text">
+        <h2 class="section-title" style="text-align:left;">¿Qué es VisLearn?</h2>
+        <p>VisLearn es la plataforma diseñada específicamente para los aprendices del programa ADSO (Análisis y Desarrollo de Software), pensada para acompañar su proyección internacional.</p>
+        <p>Buscamos reducir las barreras que dificultan el acceso del talento colombiano a oportunidades formativas y laborales en el extranjero, centralizando la gestión documental, el seguimiento y la asesoría en un solo lugar.</p>
+    </div>
+    <div class="about-what__images">
+        <img src="{% static 'img/about-desk.jpg' %}" alt="Escritorio de un desarrollador de software">
+        
+    </div>
+</section>
+
+<section class="about-alliance">
+    <h2 class="about-alliance__title">Alianza SENA - ADSO</h2>
+    <p class="about-alliance__quote">"Acompañamos la formación técnica con un proceso claro y estructurado hacia la movilidad internacional."</p>
+    <div class="about-alliance__logos" data-reveal-stagger="zoom">
+        <div class="about-alliance__logo"><span class="material-symbols-outlined" style="font-size:32px;">account_balance</span><span>SENA</span></div>
+        <div class="about-alliance__logo"><span class="material-symbols-outlined" style="font-size:32px;">terminal</span><span>ADSO</span></div>
+        <div class="about-alliance__logo"><span class="material-symbols-outlined" style="font-size:32px;">public</span><span>Movilidad Global</span></div>
+    </div>
+</section>
+
+<section class="about-pillars">
+    <h2 class="section-title">Nuestros Pilares de Gestión</h2>
+    <div class="about-pillars__grid" data-reveal-stagger="up">
+        <div class="benefit-card">
+            <div class="benefit-card__icon"><span class="material-symbols-outlined">description</span></div>
+            <h3 class="benefit-card__title">Gestión de Visa</h3>
+            <p class="benefit-card__text">Asesoría en cada paso documental y administrativo del trámite hacia tu destino.</p>
+        </div>
+        <div class="benefit-card">
+            <div class="benefit-card__icon"><span class="material-symbols-outlined">handshake</span></div>
+            <h3 class="benefit-card__title">Conexión Institucional</h3>
+            <p class="benefit-card__text">Acompañamiento respaldado por la alianza entre el SENA y el programa ADSO.</p>
+        </div>
+        <div class="benefit-card">
+            <div class="benefit-card__icon"><span class="material-symbols-outlined">home_pin</span></div>
+            <h3 class="benefit-card__title">Acompañamiento Continuo</h3>
+            <p class="benefit-card__text">Seguimiento cercano durante todo el proceso, no solo al momento de aplicar.</p>
+        </div>
+    </div>
+</section>
+
+<section class="about-work" data-reveal-alternate>
+    <div>
+        <h2 class="section-title" style="text-align:left;">Movilidad y Formación en el Extranjero</h2>
+        <div class="about-work__item">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <div><h4>Duración Flexible</h4><p>Procesos y estancias diseñadas según el programa y destino de cada aprendiz.</p></div>
+        </div>
+        <div class="about-work__item">
+            <span class="material-symbols-outlined">flight_takeoff</span>
+            <div><h4>Destinos Diversos</h4><p>Acompañamiento para procesos hacia distintos países según convenios vigentes.</p></div>
+        </div>
+        <div class="about-work__item">
+            <span class="material-symbols-outlined">groups</span>
+            <div><h4>Comunidad de Egresados</h4><p>Una red de aprendices y egresados que ya vivieron el proceso.</p></div>
+        </div>
+    </div>
+    <div class="about-work__image-wrap">
+        <img src="{% static 'img/about-team.jpg' %}" alt="Equipo de desarrolladores trabajando juntos">
+    </div>
+</section>
+
+<section class="about-cta" data-reveal-stagger="up">
+    <h2 class="about-cta__title">¿Lista o listo para el siguiente nivel?</h2>
+    <p class="about-cta__text">Únete a los aprendices ADSO que ya iniciaron su proceso de movilidad internacional con VisLearn.</p>
+    <a href="{% url 'usuarios:registro' %}" class="btn-primary">Empezar mi proceso hoy</a>
+</section>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Ofertas Laborales{% endblock %}
+{% block dashboard_css %}<link rel="stylesheet" href="{% static 'css/ofertas.css' %}">{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="jobs-header">
+        <h1 class="jobs-header__title">Ofertas Laborales</h1>
+        <p class="jobs-header__sub">{{ total_ofertas }} oferta{{ total_ofertas|pluralize }} activa{{ total_ofertas|pluralize }} en {{ total_paises }} país{{ total_paises|pluralize:"es" }}</p>
+    </div>
+
+    <form class="jobs-filters" method="get">
+        <div>
+            <label for="q">Palabras clave o tecnologías</label>
+            <input type="text" id="q" name="q" value="{{ q }}" placeholder="Python, backend, QA, empresa...">
+        </div>
+        <div>
+            <label for="pais">País</label>
+            <select id="pais" name="pais">
+                <option value="">Todos los países</option>
+                {% for p in paises %}
+                    <option value="{{ p }}" {% if p == pais_actual %}selected{% endif %}>{{ p }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="modalidad">Modalidad</label>
+            <select id="modalidad" name="modalidad">
+                <option value="">Cualquiera</option>
+                {% for valor, nombre in modalidades %}
+                    <option value="{{ valor }}" {% if valor == modalidad_actual %}selected{% endif %}>{{ nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="jobs-filters__actions">
+            <button type="submit" class="btn-solid">Buscar</button>
+            <a href="{% url 'ofertas:lista' %}" class="btn-ghost">Limpiar</a>
+        </div>
+    </form>
+
+    <p class="jobs-count">{{ total_resultados }} resultado{{ total_resultados|pluralize }}</p>
+
+    {% for oferta in page_obj %}
+        <a href="{% url 'ofertas:detalle' oferta.pk %}" class="job-card">
+            <div class="job-card__top">
+                <div>
+                    <h2 class="job-card__title">{{ oferta.titulo }}</h2>
+                    <p class="job-card__company">{{ oferta.empresa }}</p>
+                </div>
+                <div>
+                    <span class="job-badge">{{ oferta.get_modalidad_display }}</span>
+                    {% if oferta.estado_postulacion_label %}<span class="job-badge job-badge--state">{{ oferta.estado_postulacion_label }}</span>{% endif %}
+                </div>
+            </div>
+            <div class="job-card__meta">
+                <span><span class="material-symbols-outlined">location_on</span>{% if oferta.ciudad %}{{ oferta.ciudad }}, {% endif %}{{ oferta.pais }}</span>
+                {% if oferta.salario %}<span><span class="material-symbols-outlined">payments</span>{{ oferta.salario }}</span>{% endif %}
+                {% if oferta.tipo_visa %}<span><span class="material-symbols-outlined">badge</span>{{ oferta.tipo_visa }}</span>{% endif %}
+                {% if oferta.idioma_requerido %}<span><span class="material-symbols-outlined">language</span>{{ oferta.idioma_requerido }}</span>{% endif %}
+            </div>
+            <div class="job-chips">
+                {% for tec in oferta.lista_tecnologias %}<span class="job-chip">{{ tec }}</span>{% endfor %}
+            </div>
+        </a>
+    {% empty %}
+        <div class="jobs-empty">
+            <span class="material-symbols-outlined" style="font-size:48px;">search_off</span>
+            <p>No encontramos ofertas con esos filtros.</p>
+        </div>
+    {% endfor %}
+
+    {% if page_obj.paginator.num_pages > 1 %}
+        <div class="jobs-pagination">
+            {% if page_obj.has_previous %}
+                <a href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ page_obj.previous_page_number }}" class="btn-ghost">Anterior</a>
+            {% endif %}
+            <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ page_obj.next_page_number }}" class="btn-ghost">Siguiente</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

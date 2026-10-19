@@ -1,0 +1,50 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Gestionar Blog{% endblock %}
+{% block dashboard_css %}<link rel="stylesheet" href="{% static 'css/ofertas.css' %}">{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="manage-bar">
+        <div class="jobs-header" style="margin:0;">
+            <h1 class="jobs-header__title">Gestionar Blog</h1>
+            <p class="jobs-header__sub">Publica y edita los artículos que ven los visitantes.</p>
+        </div>
+        <a href="{% url 'core:blog_crear' %}" class="btn-solid">
+            <span class="material-symbols-outlined" style="font-size:18px;">add</span> Nueva publicación
+        </a>
+    </div>
+
+    <div class="manage-table-wrap">
+        <table class="manage-table">
+            <thead>
+                <tr><th>Título</th><th>Categoría</th><th>Autor</th><th>Fecha</th><th>Destacada</th><th>Acciones</th></tr>
+            </thead>
+            <tbody>
+                {% for publicacion in publicaciones %}
+                    <tr>
+                        <td><strong>{{ publicacion.titulo }}</strong></td>
+                        <td>{{ publicacion.get_categoria_display }}</td>
+                        <td>{{ publicacion.autor }}</td>
+                        <td>{{ publicacion.fecha_publicacion|date:"d M Y" }}</td>
+                        <td>{% if publicacion.destacado %}<span class="post-badge post-badge--postulado">Destacada</span>{% else %}—{% endif %}</td>
+                        <td>
+                            <div class="manage-actions">
+                                <a href="{% url 'core:detalle_publicacion' publicacion.slug %}" class="btn-link-small">Ver</a>
+                                <a href="{% url 'core:blog_editar' publicacion.pk %}" class="btn-link-small">Editar</a>
+                                <form method="post" action="{% url 'core:blog_eliminar' publicacion.pk %}" onsubmit="return confirm('¿Eliminar esta publicación? Esta acción no se puede deshacer.');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-link-small btn-link-small--danger">Eliminar</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="6" style="text-align:center; padding:32px; color:var(--color-on-surface-variant);">Aún no hay publicaciones. Crea la primera.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

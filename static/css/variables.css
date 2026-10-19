@@ -1,0 +1,46 @@
+:root {
+    /* Colores — paleta "Academic Warmth" de Stitch */
+    --color-primary: #885200;
+    --color-on-primary: #ffffff;
+    --color-primary-container: #ed9726;
+    --color-on-primary-container: #5d3600;
+
+    --color-secondary: #7b5800;
+    --color-secondary-container: #febf31;
+    --color-on-secondary-container: #6e4f00;
+
+    --color-background-page: #FFFCE2;
+    --color-surface: #f9f9f9;
+    --color-surface-container-low: #f3f3f3;
+    --color-surface-container-lowest: #ffffff;
+
+    --color-on-surface: #1b1b1b;
+    --color-on-surface-variant: #534435;
+    --color-outline: #867463;
+    --color-outline-variant: #d9c3af;
+    --color-link-accent: #18A0FB;
+
+    /* Tipografías */
+    --font-display: 'Libre Caslon Text', serif;
+    --font-body: 'Source Serif 4', serif;
+    --font-label: 'Inter', sans-serif;
+
+    /* Radios y espaciados */
+    --radius-sm: 0.25rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+
+    --spacing-gutter: 24px;
+    --spacing-margin-mobile: 16px;
+    --spacing-margin-desktop: 64px;
+    --container-max: 1200px;
+}
+
+body {
+    background-color: var(--color-background-page);
+    color: var(--color-on-surface);
+    font-family: var(--font-body);
+    margin: 0;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}

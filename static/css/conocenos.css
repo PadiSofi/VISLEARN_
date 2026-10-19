@@ -1,0 +1,89 @@
+.about-hero {
+    position: relative;
+    height: 420px;
+    display: flex;
+    align-items: flex-end;
+    background-size: cover;
+    background-position: center;
+}
+
+.about-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(27,27,27,0.85), rgba(27,27,27,0.2));
+}
+
+.about-hero__content {
+    position: relative;
+    z-index: 1;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 48px var(--spacing-margin-mobile);
+    color: #fff;
+}
+
+@media (min-width: 768px) { .about-hero__content { padding: 48px var(--spacing-margin-desktop); } }
+.about-hero__title { font-family: var(--font-display); font-size: 40px; margin-bottom: 12px; }
+.about-hero__subtitle { font-size: 18px; opacity: 0.9; max-width: 640px; }
+
+.about-what {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 80px var(--spacing-margin-mobile);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+}
+
+@media (min-width: 768px) { .about-what { grid-template-columns: 1fr 1fr; padding: 80px var(--spacing-margin-desktop); } }
+.about-what__text p { color: var(--color-on-surface-variant); line-height: 1.7; margin-bottom: 16px; }
+.about-what__images { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.about-what__images img:first-child { grid-column: span 2; }
+.about-what__images img { width: 100%; border-radius: var(--radius-lg); object-fit: cover; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+
+.about-alliance { background: var(--color-primary); color: #fff; padding: 64px var(--spacing-margin-mobile); text-align: center; }
+.about-alliance__title { font-family: var(--font-display); font-size: 28px; margin-bottom: 12px; }
+.about-alliance__quote { font-style: italic; opacity: 0.85; max-width: 560px; margin: 0 auto 32px; }
+.about-alliance__logos { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; }
+.about-alliance__logo { display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0.9; }
+
+.about-pillars { max-width: var(--container-max); margin: 0 auto; padding: 96px var(--spacing-margin-mobile); text-align: center; }
+@media (min-width: 768px) { .about-pillars { padding: 96px var(--spacing-margin-desktop); } }
+.about-pillars__grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-gutter); margin-top: 48px; text-align: left; }
+@media (min-width: 768px) { .about-pillars__grid { grid-template-columns: repeat(3, 1fr); } }
+
+.about-work {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--spacing-margin-mobile) 96px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+}
+
+@media (min-width: 768px) { .about-work { grid-template-columns: 1fr 1fr; padding: 0 var(--spacing-margin-desktop) 96px; } }
+.about-work__item { display: flex; gap: 16px; margin-bottom: 24px; }
+.about-work__item .material-symbols-outlined { color: var(--color-primary); font-size: 28px; }
+.about-work__item h4 { font-family: var(--font-display); font-size: 16px; color: var(--color-on-surface); margin: 0 0 4px; }
+.about-work__item p { font-size: 14px; color: var(--color-on-surface-variant); margin: 0; }
+.about-work__image-wrap { position: relative; }
+.about-work__image-wrap img { width: 100%; border-radius: var(--radius-xl); }
+.about-work__stat {
+    position: absolute;
+    bottom: -20px; right: -20px;
+    background: #fff;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    padding: 16px 24px;
+    text-align: center;
+}
+
+.about-work__stat p:first-child { font-family: var(--font-display); font-size: 28px; color: var(--color-primary); margin: 0; }
+.about-work__stat p:last-child { font-size: 12px; color: var(--color-on-surface-variant); margin: 0; }
+
+.about-cta { background: var(--color-primary); color: #fff; text-align: center; padding: 80px var(--spacing-margin-mobile); }
+.about-cta__title { font-family: var(--font-display); font-size: 32px; margin-bottom: 16px; }
+.about-cta__text { opacity: 0.85; max-width: 560px; margin: 0 auto 32px; }

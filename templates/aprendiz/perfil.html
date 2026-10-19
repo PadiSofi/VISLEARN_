@@ -1,0 +1,245 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Mi Perfil{% endblock %}
+{% block dashboard_css %}<link rel="stylesheet" href="{% static 'css/perfil.css' %}">{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <section class="profile-hero">
+        <div class="profile-hero__top">
+            <div class="profile-hero__identity">
+                <div class="profile-hero__avatar">
+                    {% if perfil.foto %}
+                        <img src="{{ perfil.foto.url }}" alt="Foto de perfil">
+                    {% else %}
+                        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+                            <span class="material-symbols-outlined" style="font-size:48px;color:var(--color-on-surface-variant);">person</span>
+                        </div>
+                    {% endif %}
+                </div>
+                <div>
+                    <div class="profile-hero__badges">
+                        <span class="badge-verified"><span class="material-symbols-outlined" style="font-size:14px;">verified</span> Aprendiz Verificado • SENA</span>
+                        {% if perfil.ficha %}<span class="badge-neutral">Ficha {{ perfil.ficha }}</span>{% endif %}
+                    </div>
+                    <h1 class="profile-hero__name">{{ user.get_full_name }}</h1>
+                    <p class="profile-hero__meta">{{ perfil.programa_formacion|default:"Programa por definir" }} • {{ perfil.centro_formacion|default:"Centro de formación" }}</p>
+                </div>
+            </div>
+            <div class="profile-hero__actions">
+                <button type="submit" form="form-info-personal" class="btn-solid">
+                    <span class="material-symbols-outlined" style="font-size:18px;">save</span> Guardar Cambios
+                </button>
+            </div>
+        </div>
+
+        <div class="completeness">
+            <div class="completeness__row">
+                <span class="completeness__label"><span class="material-symbols-outlined" style="color:var(--color-primary);">trending_up</span> Completitud del Expediente</span>
+                <span class="completeness__value">{{ perfil.porcentaje_completitud }}% Completado</span>
+            </div>
+            <div class="completeness__bar"><div class="completeness__fill" style="width: {{ perfil.porcentaje_completitud }}%;"></div></div>
+        </div>
+
+        <nav class="profile-tabs">
+            <a href="#informacion-personal" class="profile-tab is-active"><span class="material-symbols-outlined" style="font-size:18px;">badge</span> Información Personal</a>
+            <a href="#caracterizacion" class="profile-tab"><span class="material-symbols-outlined" style="font-size:18px;">demography</span> Caracterización Socioeconómica</a>
+            <a href="#academica-laboral" class="profile-tab"><span class="material-symbols-outlined" style="font-size:18px;">history_edu</span> Académica • Laboral • Idiomas</a>
+            <a href="#seguridad" class="profile-tab"><span class="material-symbols-outlined" style="font-size:18px;">shield_person</span> Seguridad y Privacidad</a>
+        </nav>
+    </section>
+
+    <section class="profile-section" id="informacion-personal">
+        <div class="profile-section__header">
+            <div class="profile-section__title">
+                <span class="material-symbols-outlined" style="font-size:24px;">account_box</span>
+                <div>
+                    <h2>1. Información Personal</h2>
+                    <p class="profile-section__desc">Datos biográficos y de contacto.</p>
+                </div>
+            </div>
+        </div>
+        <form id="form-info-personal" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="form_id" value="personal">
+            <div class="profile-form-grid">
+                <div class="profile-field"><label>Tipo de documento</label><input type="text" value="{{ user.get_tipo_documento_display }}" disabled></div>
+                <div class="profile-field"><label>Número de documento</label><input type="text" value="{{ user.numero_documento }}" disabled></div>
+                {% for field in form %}
+                    <div class="profile-field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+            </div>
+        </form>
+    </section>
+
+    <section class="profile-section" id="caracterizacion">
+        <div class="profile-section__header">
+            <div class="profile-section__title">
+                <span class="material-symbols-outlined" style="font-size:24px;">demography</span>
+                <div>
+                    <h2>2. Caracterización Socioeconómica</h2>
+                    <p class="profile-section__desc">Información requerida para trámites institucionales y de bienestar.</p>
+                </div>
+            </div>
+            <button type="submit" form="form-caracterizacion" class="btn-solid">
+                <span class="material-symbols-outlined" style="font-size:18px;">save</span> Guardar Cambios
+            </button>
+        </div>
+        <form id="form-caracterizacion" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="form_id" value="caracterizacion">
+            <div class="profile-form-grid">
+                {% for field in form_caracterizacion %}
+                    <div class="profile-field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+            </div>
+        </form>
+    </section>
+    
+    <section class="profile-section" id="academica-laboral">
+        <div class="profile-section__header">
+            <div class="profile-section__title">
+                <span class="material-symbols-outlined" style="font-size:24px;">history_edu</span>
+                <div>
+                    <h2>3. Trayectoria Académica, Laboral e Idiomas</h2>
+                    <p class="profile-section__desc">Estudios, experiencia y dominio de idiomas.</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="subsection-title">Estudios y Formación Académica</h3>
+        {% for estudio in perfil.estudios.all %}
+            <div class="timeline-item">
+                <div class="timeline-item__icon"><span class="material-symbols-outlined">school</span></div>
+                <div class="timeline-item__body">
+                    <p class="timeline-item__title">{{ estudio.titulo }}</p>
+                    <p class="timeline-item__meta">{{ estudio.institucion }} · {{ estudio.fecha_inicio|date:"Y" }}{% if estudio.en_curso %} - En curso{% elif estudio.fecha_fin %} - {{ estudio.fecha_fin|date:"Y" }}{% endif %}</p>
+                </div>
+                <form method="post" action="{% url 'aprendiz:eliminar_estudio' estudio.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="timeline-item__delete"><span class="material-symbols-outlined">delete</span></button>
+                </form>
+            </div>
+        {% empty %}
+            <p class="profile-section__desc">Aún no has agregado estudios.</p>
+        {% endfor %}
+        <form class="inline-add-form" method="post" action="{% url 'aprendiz:agregar_estudio' %}">
+            {% csrf_token %}
+            {% for field in form_estudio %}
+                <div class="profile-field"><label>{{ field.label }}</label>{{ field }}</div>
+            {% endfor %}
+            <button type="submit" class="btn-ghost">Agregar</button>
+        </form>
+
+        <h3 class="subsection-title">Experiencia Laboral y Prácticas Formativas</h3>
+        {% for experiencia in perfil.experiencias.all %}
+            <div class="timeline-item">
+                <div class="timeline-item__icon"><span class="material-symbols-outlined">work</span></div>
+                <div class="timeline-item__body">
+                    <p class="timeline-item__title">{{ experiencia.cargo }}</p>
+                    <p class="timeline-item__meta">{{ experiencia.empresa }} · {{ experiencia.fecha_inicio|date:"Y" }}{% if experiencia.actual %} - Actual{% elif experiencia.fecha_fin %} - {{ experiencia.fecha_fin|date:"Y" }}{% endif %}</p>
+                </div>
+                <form method="post" action="{% url 'aprendiz:eliminar_experiencia' experiencia.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="timeline-item__delete"><span class="material-symbols-outlined">delete</span></button>
+                </form>
+            </div>
+        {% empty %}
+            <p class="profile-section__desc">Aún no has agregado experiencia laboral.</p>
+        {% endfor %}
+        <form class="inline-add-form" method="post" action="{% url 'aprendiz:agregar_experiencia' %}">
+            {% csrf_token %}
+            {% for field in form_experiencia %}
+                <div class="profile-field"><label>{{ field.label }}</label>{{ field }}</div>
+            {% endfor %}
+            <button type="submit" class="btn-ghost">Agregar</button>
+        </form>
+
+        <h3 class="subsection-title">Dominio de Idiomas Extranjeros</h3>
+        {% for idioma in perfil.idiomas.all %}
+            <div class="timeline-item">
+                <div class="timeline-item__icon"><span class="material-symbols-outlined">translate</span></div>
+                <div class="timeline-item__body">
+                    <p class="timeline-item__title">{{ idioma.idioma }}</p>
+                    <p class="timeline-item__meta">{{ idioma.get_nivel_display }}</p>
+                </div>
+                <form method="post" action="{% url 'aprendiz:eliminar_idioma' idioma.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="timeline-item__delete"><span class="material-symbols-outlined">delete</span></button>
+                </form>
+            </div>
+        {% empty %}
+            <p class="profile-section__desc">Aún no has agregado idiomas.</p>
+        {% endfor %}
+        <form class="inline-add-form" method="post" action="{% url 'aprendiz:agregar_idioma' %}">
+            {% csrf_token %}
+            {% for field in form_idioma %}
+                <div class="profile-field"><label>{{ field.label }}</label>{{ field }}</div>
+            {% endfor %}
+            <button type="submit" class="btn-ghost">Agregar</button>
+        </form>
+    </section>
+
+    <section class="profile-section" id="seguridad">
+        <div class="profile-section__header">
+            <div class="profile-section__title">
+                <span class="material-symbols-outlined" style="font-size:24px;">shield_person</span>
+                <div>
+                    <h2>4. Seguridad, Accesos y Políticas de Tratamiento</h2>
+                    <p class="profile-section__desc">Protección de datos conforme a la Ley Estatutaria 1581 de 2012 de Protección de Datos Personales.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="security-grid">
+            <div class="security-card">
+                <h3 class="security-card__title"><span class="material-symbols-outlined" style="font-size:18px;">lock_reset</span> Cambiar Contraseña</h3>
+                <p class="security-card__desc">Usa una contraseña segura y no la compartas con nadie.</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_id" value="password">
+                    {% for field in form_password %}
+                        <div class="profile-field" style="margin-bottom:12px;">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% for error in field.errors %}<span style="color:#ba1a1a; font-size:12px;">{{ error }}</span>{% endfor %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn-solid">Actualizar Contraseña</button>
+                </form>
+            </div>
+
+            <div class="security-card">
+                <h3 class="security-card__title"><span class="material-symbols-outlined" style="font-size:18px;">privacy_tip</span> Privacidad de Datos</h3>
+                <p class="security-card__desc">Controla cómo usamos tu información dentro de VisLearn.</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_id" value="privacidad">
+                    <div class="toggle-row">
+                        <label for="{{ form_privacidad.recibir_notificaciones_email.id_for_label }}">Recibir notificaciones por correo</label>
+                        <div class="toggle-switch">
+                            {{ form_privacidad.recibir_notificaciones_email }}
+                            <label class="toggle-switch__track" for="{{ form_privacidad.recibir_notificaciones_email.id_for_label }}"></label>
+                        </div>
+                    </div>
+                    <div class="toggle-row">
+                        <label for="{{ form_privacidad.autorizar_tratamiento_datos.id_for_label }}">Autorizo el tratamiento de mis datos personales</label>
+                        <div class="toggle-switch">
+                            {{ form_privacidad.autorizar_tratamiento_datos }}
+                            <label class="toggle-switch__track" for="{{ form_privacidad.autorizar_tratamiento_datos.id_for_label }}"></label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-solid" style="margin-top:16px;">Guardar Preferencias</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% block dashboard_css %}{% endblock %}
+{% endblock %}
+
+{% block header %}
+<header class="app-header">
+    <div class="app-header__inner">
+        <div class="app-header__brand">
+            <div class="app-header__logo"><span class="material-symbols-outlined">school</span></div>
+            <span class="app-header__name">VisLearn</span>
+        </div>
+        <button class="app-nav-toggle" id="app-nav-toggle" aria-label="Abrir menú">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+        <nav class="app-nav" id="app-nav">
+            {% if user.is_instructor %}
+                <a href="{% url 'instructor:lista_aprendices' %}" class="app-nav__link is-active">Mis Aprendices</a>
+                <a href="{% url 'ofertas:gestion_lista' %}" class="app-nav__link">Gestionar Ofertas</a>
+                <a href="{% url 'core:blog_gestion' %}" class="app-nav__link">Gestionar Blog</a>
+            {% else %}
+                <a href="{% url 'aprendiz:perfil' %}" class="app-nav__link">Mi Perfil</a>
+                <a href="{% url 'aprendiz:seguimiento' %}" class="app-nav__link">Seguimiento y Trámites</a>
+                <a href="{% url 'ofertas:lista' %}" class="app-nav__link">Ofertas Laborales</a>
+                <a href="{% url 'ofertas:mis_postulaciones' %}" class="app-nav__link">Mis Postulaciones</a>
+            {% endif %}
+        </nav>
+        <div class="app-header__actions">
+            <div class="notif-wrap">
+                <button class="app-icon-btn" id="notif-toggle" aria-label="Notificaciones">
+                    <span class="material-symbols-outlined">notifications</span>
+                    {% if notificaciones_no_leidas %}<span class="notif-badge">{{ notificaciones_no_leidas }}</span>{% endif %}
+                </button>
+                <div class="notif-dropdown" id="notif-dropdown">
+                    <div class="notif-dropdown__header">
+                        <span>Notificaciones</span>
+                        {% if notificaciones_no_leidas %}
+                            <a href="{% url 'core:marcar_todas_leidas' %}">Marcar todas como leídas</a>
+                        {% endif %}
+                    </div>
+                    {% for notif in notificaciones_recientes %}
+                        <a href="{% url 'core:ir_a_notificacion' notif.pk %}" class="notif-item {% if not notif.leida %}is-unread{% endif %}">
+                            {{ notif.mensaje }}
+                            <span class="notif-item__time">{{ notif.fecha_creacion|timesince }} atrás</span>
+                        </a>
+                    {% empty %}
+                        <p class="notif-empty">No tienes notificaciones todavía.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="app-user-chip">
+                <div class="app-user-chip__avatar"><span class="material-symbols-outlined">person</span></div>
+                <div class="app-user-chip__info">
+                    <span class="app-user-chip__name">{{ user.get_full_name }}</span>
+                    <span class="app-user-chip__role">{% if user.is_instructor %}Instructor{% else %}Aprendiz{% endif %}</span>
+                </div>
+            </div>
+            <a href="{% url 'usuarios:logout' %}" class="app-icon-btn" title="Cerrar sesión">
+                <span class="material-symbols-outlined">logout</span>
+            </a>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block footer %}{% endblock %}
