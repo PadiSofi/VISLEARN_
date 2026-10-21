@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST
 from core.models import notificar_instructores
-from usuarios.decorators import aprendiz_required, instructor_required
+from usuarios.decorators import aprendiz_required, contenido_required
 from .forms import ActualizarPostulacionForm, OfertaLaboralForm
 from .models import OfertaLaboral, Postulacion
 
@@ -60,7 +60,6 @@ def lista_ofertas(request):
         'modalidad_actual': modalidad,
         'query_string': params.urlencode(),
     })
-
 
 @never_cache
 @aprendiz_required
@@ -173,13 +172,13 @@ def actualizar_postulacion(request, pk):
 
 # Instructor: gestión de ofertas
 @never_cache
-@instructor_required
+@contenido_required
 def gestion_lista(request):
     ofertas = OfertaLaboral.objects.annotate(total_postulaciones=Count('postulaciones'))
     return render(request, 'ofertas/gestion_lista.html', {'ofertas': ofertas})
 
 @never_cache
-@instructor_required
+@contenido_required
 def gestion_crear(request):
     if request.method == 'POST':
         form = OfertaLaboralForm(request.POST)
@@ -192,7 +191,7 @@ def gestion_crear(request):
     return render(request, 'ofertas/gestion_form.html', {'form': form, 'titulo_pagina': 'Nueva oferta laboral'})
 
 @never_cache
-@instructor_required
+@contenido_required
 def gestion_editar(request, pk):
     oferta = get_object_or_404(OfertaLaboral, pk=pk)
     if request.method == 'POST':
@@ -206,7 +205,7 @@ def gestion_editar(request, pk):
     return render(request, 'ofertas/gestion_form.html', {'form': form, 'titulo_pagina': 'Editar oferta laboral'})
 
 @require_POST
-@instructor_required
+@contenido_required
 def gestion_toggle(request, pk):
     oferta = get_object_or_404(OfertaLaboral, pk=pk)
     oferta.activa = not oferta.activa
@@ -215,7 +214,7 @@ def gestion_toggle(request, pk):
     return redirect('ofertas:gestion_lista')
 
 @require_POST
-@instructor_required
+@contenido_required
 def gestion_eliminar(request, pk):
     oferta = get_object_or_404(OfertaLaboral, pk=pk)
     if oferta.postulaciones.exists():

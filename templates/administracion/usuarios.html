@@ -1,0 +1,108 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Usuarios{% endblock %}
+{% block dashboard_css %}
+<link rel="stylesheet" href="{% static 'css/ofertas.css' %}">
+<link rel="stylesheet" href="{% static 'css/administracion.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <a href="{% url 'administracion:inicio' %}" class="back-link" style="display:inline-flex; align-items:center; gap:4px; margin-bottom:16px; text-decoration:none; color:var(--color-on-surface-variant);">
+        <span class="material-symbols-outlined" style="font-size:18px;">arrow_back</span> Administración
+    </a>
+    <div class="jobs-header">
+        <h1 class="jobs-header__title">Usuarios</h1>
+        <p class="jobs-header__sub">Aprueba solicitudes de instructor, cambia roles y activa o desactiva cuentas.</p>
+    </div>
+
+    <nav class="post-tabs">
+        {% for clave, nombre, total in tabs %}
+            <a href="?tab={{ clave }}" class="post-tab {% if clave == tab %}is-active{% endif %}">{{ nombre }} <span>{{ total }}</span></a>
+        {% endfor %}
+    </nav>
+
+    <form class="jobs-filters" method="get" style="grid-template-columns: 1fr auto;">
+        <input type="hidden" name="tab" value="{{ tab }}">
+        <div>
+            <label for="q">Buscar</label>
+            <input type="text" id="q" name="q" value="{{ q }}" placeholder="Nombre, documento o correo">
+        </div>
+        <div class="jobs-filters__actions">
+            <button type="submit" class="btn-solid">Buscar</button>
+            <a href="?tab={{ tab }}" class="btn-ghost">Limpiar</a>
+        </div>
+    </form>
+
+    <div class="manage-table-wrap">
+        <table class="manage-table">
+            <thead>
+                <tr><th>Nombre</th><th>Documento</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Registro</th><th>Acciones</th></tr>
+            </thead>
+            <tbody>
+                {% for u in page_obj %}
+                    <tr>
+                        <td><strong>{{ u.get_full_name }}</strong></td>
+                        <td>{{ u.numero_documento }}</td>
+                        <td>{{ u.email }}</td>
+                        <td>
+                            {% if u.solicitud_instructor %}<span class="post-badge post-badge--en_entrevista">Solicitud de instructor</span>
+                            {% elif u.is_instructor %}<span class="post-badge post-badge--aceptada">Instructor</span>
+                            {% elif u.is_aprendiz %}<span class="post-badge post-badge--postulado">Aprendiz</span>
+                            {% else %}<span class="post-badge post-badge--guardada">Sin rol</span>{% endif %}
+                        </td>
+                        <td>{% if u.is_active %}Activo{% else %}<span class="post-badge post-badge--rechazada">Inactivo</span>{% endif %}</td>
+                        <td>{{ u.date_joined|date:"d M Y" }}</td>
+                        <td>
+                            <div class="manage-actions">
+                                {% if u.solicitud_instructor %}
+                                    <form method="post" action="{% url 'administracion:aprobar_instructor' u.pk %}">
+                                        {% csrf_token %}<input type="hidden" name="tab" value="{{ tab }}">
+                                        <button type="submit" class="btn-link-small">Aprobar</button>
+                                    </form>
+                                    <form method="post" action="{% url 'administracion:rechazar_solicitud' u.pk %}" onsubmit="return confirm('¿Rechazar esta solicitud?');">
+                                        {% csrf_token %}<input type="hidden" name="tab" value="{{ tab }}">
+                                        <button type="submit" class="btn-link-small btn-link-small--danger">Rechazar</button>
+                                    </form>
+                                {% else %}
+                                    {% if not u.is_instructor %}
+                                        <form method="post" action="{% url 'administracion:cambiar_rol' u.pk %}" onsubmit="return confirm('¿Pasar esta cuenta a instructor? Podrá ver los documentos de los aprendices.');">
+                                            {% csrf_token %}<input type="hidden" name="tab" value="{{ tab }}"><input type="hidden" name="rol" value="instructor">
+                                            <button type="submit" class="btn-link-small">Pasar a instructor</button>
+                                        </form>
+                                    {% endif %}
+                                    {% if not u.is_aprendiz %}
+                                        <form method="post" action="{% url 'administracion:cambiar_rol' u.pk %}" onsubmit="return confirm('¿Pasar esta cuenta a aprendiz?');">
+                                            {% csrf_token %}<input type="hidden" name="tab" value="{{ tab }}"><input type="hidden" name="rol" value="aprendiz">
+                                            <button type="submit" class="btn-link-small">Pasar a aprendiz</button>
+                                        </form>
+                                    {% endif %}
+                                {% endif %}
+                                <form method="post" action="{% url 'administracion:toggle_activo' u.pk %}" onsubmit="return confirm('{% if u.is_active %}¿Desactivar esta cuenta? No podrá iniciar sesión.{% else %}¿Activar esta cuenta?{% endif %}');">
+                                    {% csrf_token %}<input type="hidden" name="tab" value="{{ tab }}">
+                                    <button type="submit" class="btn-link-small {% if u.is_active %}btn-link-small--danger{% endif %}">{% if u.is_active %}Desactivar{% else %}Activar{% endif %}</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="7" style="text-align:center; padding:32px; color:var(--color-on-surface-variant);">No hay usuarios en esta vista.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if page_obj.paginator.num_pages > 1 %}
+        <div class="jobs-pagination">
+            {% if page_obj.has_previous %}
+                <a href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ page_obj.previous_page_number }}" class="btn-ghost">Anterior</a>
+            {% endif %}
+            <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ page_obj.next_page_number }}" class="btn-ghost">Siguiente</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

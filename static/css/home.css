@@ -62,42 +62,6 @@
     .hero__actions { flex-direction: row; }
 }
 
-/* ===== TICKER DE DATOS ===== */
-.info-ticker {
-    background: var(--color-surface-container-low);
-    border-bottom: 1px solid rgba(217,195,175,0.2);
-    padding: 16px 0;
-    overflow-x: auto;
-}
-
-.info-ticker__inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 32px;
-    max-width: var(--container-max);
-    margin: 0 auto;
-    padding: 0 var(--spacing-margin-mobile);
-    white-space: nowrap;
-}
-@media (min-width: 768px) {
-    .info-ticker__inner { padding: 0 var(--spacing-margin-desktop); }
-}
-.info-ticker__item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-family: var(--font-label);
-    font-size: 14px;
-    color: var(--color-on-surface-variant);
-}
-.info-ticker__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--color-link-accent);
-}
-
 /* ===== BENEFICIOS ===== */
 .benefits {
     max-width: var(--container-max);

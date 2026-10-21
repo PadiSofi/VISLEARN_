@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import MensajeContacto
-from .models import MensajeContacto, Publicacion
+from .models import MensajeContacto, Publicacion, Testimonio
 
 # Register your models here.
 
@@ -16,3 +16,9 @@ class PublicacionAdmin(admin.ModelAdmin):
     list_filter = ('categoria', 'destacado')
     prepopulated_fields = {'slug': ('titulo',)}
     search_fields = ('titulo', 'resumen', 'contenido')
+
+@admin.register(Testimonio)
+class TestimonioAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'rol', 'autorizacion_confirmada', 'publicado', 'fecha_creacion')
+    list_filter = ('publicado', 'autorizacion_confirmada')
+    search_fields = ('nombre', 'texto')

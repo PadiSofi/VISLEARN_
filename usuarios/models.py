@@ -15,6 +15,7 @@ class Usuario(AbstractUser):
     numero_documento = models.CharField(max_length=20, unique=True)
     is_aprendiz = models.BooleanField(default=False)
     is_instructor = models.BooleanField(default=False)
+    solicitud_instructor = models.BooleanField(default=False)
 
     REQUIRED_FIELDS = ['email', 'tipo_documento', 'numero_documento']
 

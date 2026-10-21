@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Tu cuenta{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/auth.css' %}">{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card" style="text-align:center;">
+        {% if user.solicitud_instructor %}
+            <span class="material-symbols-outlined" style="font-size:48px; color:var(--color-primary);">hourglass_top</span>
+            <h1 class="auth-card__title">Solicitud en revisión</h1>
+            <p class="auth-card__subtitle">Tu solicitud de cuenta de instructor está pendiente de aprobación. Te avisaremos por correo cuando un administrador la revise.</p>
+        {% else %}
+            <span class="material-symbols-outlined" style="font-size:48px; color:var(--color-primary);">lock</span>
+            <h1 class="auth-card__title">Cuenta sin rol asignado</h1>
+            <p class="auth-card__subtitle">Tu cuenta todavía no tiene un rol activo. Si crees que es un error, escríbenos desde el formulario de contacto.</p>
+        {% endif %}
+        <a href="{% url 'usuarios:pendiente' %}" class="btn-ghost" style="margin-top:8px;">Actualizar estado</a>
+        <a href="{% url 'core:inicio' %}" class="auth-link">Volver al inicio</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+<div class="auth-field">
+    <label class="auth-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+    <div class="auth-input-wrap {% if icon %}has-icon{% endif %} {% if toggle %}has-toggle{% endif %}">
+        {% if icon %}<span class="material-symbols-outlined auth-input-icon" aria-hidden="true">{{ icon }}</span>{% endif %}
+        {{ field }}
+        {% if toggle %}
+            <button type="button" class="auth-toggle-pass" data-toggle-password aria-label="Mostrar contraseña">
+                <span class="material-symbols-outlined">visibility</span>
+            </button>
+        {% endif %}
+    </div>
+    {% for error in field.errors %}<span class="auth-error">{{ error }}</span>{% endfor %}
+</div>

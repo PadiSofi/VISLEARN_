@@ -1,45 +1,43 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}VisLearn - Iniciar Sesión{% endblock %}
+{% block title %}VisLearn - Iniciar sesión{% endblock %}
 {% block extra_css %}<link rel="stylesheet" href="{% static 'css/auth.css' %}">{% endblock %}
 
 {% block content %}
-<div class="auth-page">
-    <div class="auth-page__bg" style="background-image: url('{% static 'img/biblioteca-login.jpg' %}');"></div>
-    <div class="auth-card">
-        <div class="auth-card__header">
-            <h1 class="auth-card__title">Bienvenido</h1>
-            <p class="auth-card__subtitle">Accede a tu cuenta en VisLearn</p>
-        </div>
+<div class="auth-split">
+    {% include 'autenticacion/_aside.html' with titulo='Qué bueno verte de nuevo' texto='Continúa tu proceso de movilidad estudiantil justo donde lo dejaste.' %}
 
-        {% if form.non_field_errors %}
-            <ul class="auth-errorlist">
-                {% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}
-            </ul>
-        {% endif %}
+    <section class="auth-panel">
+        <div class="auth-panel__inner" data-reveal="up">
+            <header class="auth-heading">
+                <span class="auth-eyebrow">Iniciar sesión</span>
+                <h1 class="auth-heading__title">Bienvenido</h1>
+                <p class="auth-heading__sub">Ingresa con tu número de documento.</p>
+            </header>
 
-        <form class="auth-form" method="post">
-            {% csrf_token %}
-            <div class="auth-field">
-                <label class="auth-label" for="{{ form.username.id_for_label }}">Número de documento</label>
-                {{ form.username }}
-            </div>
-            <div class="auth-field">
-                <div class="auth-field__row">
-                    <label class="auth-label" for="{{ form.password.id_for_label }}">Contraseña</label>
+            {% if form.non_field_errors %}
+                <div class="auth-alert" role="alert">
+                    <span class="material-symbols-outlined">error</span>
+                    <div>{% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}</div>
+                </div>
+            {% endif %}
+
+            <form class="auth-form" method="post">
+                {% csrf_token %}
+                {% include 'autenticacion/_campo.html' with field=form.username icon='badge' %}
+                {% include 'autenticacion/_campo.html' with field=form.password icon='lock' toggle=True %}
+                <div class="auth-form__row">
                     <a class="auth-link" href="{% url 'usuarios:password_reset' %}">¿Olvidaste tu contraseña?</a>
                 </div>
-                {{ form.password }}
-            </div>
-            <button class="btn-auth-submit" type="submit">Iniciar Sesión</button>
-        </form>
+                <button class="btn-auth-submit" type="submit">Iniciar sesión</button>
+            </form>
 
-        <div class="auth-divider">o</div>
-
-        <p class="auth-footer-text">
-            ¿No tienes una cuenta? <a href="{% url 'usuarios:registro' %}">Regístrate</a>
-        </p>
-    </div>
+            <div class="auth-divider">¿Aún no tienes cuenta?</div>
+            <a href="{% url 'usuarios:registro' %}" class="btn-ghost auth-cta">Crear una cuenta</a>
+        </div>
+    </section>
 </div>
 {% endblock %}
+
+{% block extra_js %}<script src="{% static 'js/auth.js' %}"></script>{% endblock %}

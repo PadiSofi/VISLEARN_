@@ -1,0 +1,26 @@
+{% load static %}
+<aside class="auth-aside" style="--aside-image: url('{% static 'img/biblioteca-login.jpg' %}');">
+    <span class="auth-orb auth-orb--1" aria-hidden="true"></span>
+    <span class="auth-orb auth-orb--2" aria-hidden="true"></span>
+    <div class="auth-aside__content">
+        <a href="{% url 'core:inicio' %}" class="auth-aside__brand">VisLearn</a>
+        <div>
+            <h2 class="auth-aside__title">{{ titulo }}</h2>
+            <p class="auth-aside__text">{{ texto }}</p>
+            <ul class="auth-aside__list">
+                <li>
+                    <span class="material-symbols-outlined">folder_open</span>
+                    <div><strong>Documentos en un solo lugar</strong><span>Súbelos, reemplázalos y consulta su estado.</span></div>
+                </li>
+                <li>
+                    <span class="material-symbols-outlined">monitoring</span>
+                    <div><strong>Seguimiento de tu proceso</strong><span>Una línea de tiempo con cada etapa del trámite.</span></div>
+                </li>
+                <li>
+                    <span class="material-symbols-outlined">notifications_active</span>
+                    <div><strong>Avisos de cada avance</strong><span>Te notificamos cuando tu instructor revisa algo.</span></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>

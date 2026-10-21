@@ -27,18 +27,26 @@
                 <span class="material-symbols-outlined">menu</span>
             </button>
             <nav class="main-nav" id="main-nav">
-                <a href="{% url 'core:inicio' %}" class="nav-link">Inicio</a>
-                <a href="{% url 'core:servicios' %}" class="nav-link">Servicios</a>
-                <a href="{% url 'core:conocenos' %}" class="nav-link">Nuestra Misión</a>
-                <a href="{% url 'core:blog' %}" class="nav-link">Blog</a>
-                <a href="{% url 'core:contacto' %}" class="nav-link">Contacto</a>
+                <a href="{% url 'core:inicio' %}" class="nav-link {% if request.path == '/' %}is-active{% endif %}">Inicio</a>
+                <a href="{% url 'core:servicios' %}" class="nav-link {% if '/servicios' in request.path %}is-active{% endif %}">Servicios</a>
+                <a href="{% url 'core:conocenos' %}" class="nav-link {% if '/conocenos' in request.path %}is-active{% endif %}">Nuestra Misión</a>
+                <a href="{% url 'core:blog' %}" class="nav-link {% if '/blog' in request.path %}is-active{% endif %}">Blog</a>
+                <a href="{% url 'core:contacto' %}" class="nav-link {% if '/contacto' in request.path %}is-active{% endif %}">Contacto</a>
+
                 {% if user.is_authenticated %}
-                    {% if user.is_instructor %}
+                    {% if user.is_superuser %}
+                        <a href="{% url 'administracion:inicio' %}" class="nav-link">Administración</a>
+                    {% elif user.is_instructor %}
                         <a href="{% url 'instructor:lista_aprendices' %}" class="nav-link">Panel de Instructor</a>
-                    {% else %}
+                    {% elif user.is_aprendiz %}
                         <a href="{% url 'aprendiz:perfil' %}" class="nav-link">Mi Perfil</a>
+                    {% else %}
+                        <a href="{% url 'usuarios:pendiente' %}" class="nav-link">Mi cuenta</a>
                     {% endif %}
-                        <a href="{% url 'usuarios:logout' %}" class="nav-link">Cerrar sesión</a>
+                    <a href="{% url 'usuarios:logout' %}" class="nav-link">Cerrar sesión</a>
+                {% else %}
+                    <a href="{% url 'usuarios:login' %}" class="nav-link">Iniciar sesión</a>
+                    <a href="{% url 'usuarios:registro' %}" class="btn-solid nav-cta">Registrarse</a>
                 {% endif %}
             </nav>
         </div>
@@ -46,43 +54,61 @@
     {% endblock %}
 
     <main style="margin-top: 80px;">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message message--{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
 
     {% block footer %}
     <footer class="site-footer">
         <div class="site-footer__grid" data-reveal-stagger="up">
-            <div class="site-footer__grid">
-                <div>
-                    <div class="footer-brand">VisLearn</div>
-                    <p style="color: var(--color-on-surface-variant); font-size: 14px;">
-                        Liderando el futuro de la movilidad estudiantil internacional con tecnología y compromiso humano.
-                    </p>
-                </div>
-                <div>
-                    <h5 class="footer-heading">Institucional</h5>
-                    <ul class="footer-list">
-                        <li><a href="#" class="footer-link">SENA</a></li>
-                        <li><a href="#" class="footer-link">ADSO Portal</a></li>
-                        <li><a href="#" class="footer-link">Certificaciones</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="footer-heading">Legal</h5>
-                    <ul class="footer-list">
-                        <li><a href="#" class="footer-link">Privacidad</a></li>
-                        <li><a href="#" class="footer-link">Términos de Uso</a></li>
-                        <li><a href="#" class="footer-link">Cookies</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="footer-heading">Contacto</h5>
-                    <p style="color: var(--color-on-surface-variant); font-size: 12px;">soporte@vislearn.edu.co</p>
-                    <p style="color: var(--color-on-surface-variant); font-size: 12px;">+57 (601) 555-0123</p>
-                </div>
+            <div>
+                <div class="footer-brand">VisLearn</div>
+                <p class="footer-about">Plataforma de acompañamiento para la movilidad estudiantil internacional: documentos, seguimiento y asesoría en un solo lugar.</p>
+            </div>
+            <div>
+                <h5 class="footer-heading">Explorar</h5>
+                <ul class="footer-list">
+                    <li><a href="{% url 'core:inicio' %}" class="footer-link">Inicio</a></li>
+                    <li><a href="{% url 'core:servicios' %}" class="footer-link">Servicios</a></li>
+                    <li><a href="{% url 'core:conocenos' %}" class="footer-link">Nuestra Misión</a></li>
+                    <li><a href="{% url 'core:blog' %}" class="footer-link">Blog</a></li>
+                    <li><a href="{% url 'core:contacto' %}" class="footer-link">Contacto</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="footer-heading">Legal</h5>
+                <ul class="footer-list">
+                    <li><a href="{% url 'core:privacidad' %}" class="footer-link">Política de privacidad</a></li>
+                    <li><a href="{% url 'core:terminos' %}" class="footer-link">Términos de uso</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="footer-heading">Contacto</h5>
+                {% if sitio.email %}
+                    <p class="footer-contact"><span class="material-symbols-outlined">mail</span><a class="footer-link" href="mailto:{{ sitio.email }}">{{ sitio.email }}</a></p>
+                {% endif %}
+                {% if sitio.telefono %}
+                    <p class="footer-contact"><span class="material-symbols-outlined">call</span><a class="footer-link" href="tel:{{ sitio.telefono|cut:' ' }}">{{ sitio.telefono }}</a></p>
+                {% endif %}
+                {% if sitio.direccion %}
+                    <p class="footer-contact"><span class="material-symbols-outlined">location_on</span><span>{{ sitio.direccion }}</span></p>
+                {% endif %}
+                {% if not sitio.email and not sitio.telefono and not sitio.direccion %}
+                    <p class="footer-about">Escríbenos desde el <a class="footer-link" href="{% url 'core:contacto' %}">formulario de contacto</a>.</p>
+                {% endif %}
             </div>
         </div>
-        <div class="site-footer__bottom">© 2026 VisLearn SENA ADSO. Todos los derechos reservados.</div>
+        <div class="site-footer__bottom">
+            <div class="site-footer__bottom-inner">
+                <span>© {% now "Y" %} VisLearn. Todos los derechos reservados.</span>
+            </div>
+        </div>
     </footer>
     {% endblock %}
 

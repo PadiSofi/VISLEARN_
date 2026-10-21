@@ -1,0 +1,92 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Mensajes de contacto{% endblock %}
+{% block dashboard_css %}
+<link rel="stylesheet" href="{% static 'css/ofertas.css' %}">
+<link rel="stylesheet" href="{% static 'css/administracion.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <a href="{% url 'administracion:inicio' %}" style="display:inline-flex; align-items:center; gap:4px; margin-bottom:16px; text-decoration:none; color:var(--color-on-surface-variant);">
+        <span class="material-symbols-outlined" style="font-size:18px;">arrow_back</span> Administración
+    </a>
+    <div class="jobs-header">
+        <h1 class="jobs-header__title">Mensajes de contacto</h1>
+        <p class="jobs-header__sub">Lo que escriben los visitantes desde el formulario de contacto.</p>
+    </div>
+
+    <nav class="post-tabs">
+        {% for clave, nombre, total in tabs %}
+            <a href="?estado={{ clave }}" class="post-tab {% if clave == estado %}is-active{% endif %}">{{ nombre }} <span>{{ total }}</span></a>
+        {% endfor %}
+    </nav>
+
+    <form class="jobs-filters" method="get" style="grid-template-columns: 1fr auto;">
+        <input type="hidden" name="estado" value="{{ estado }}">
+        <div>
+            <label for="q">Buscar</label>
+            <input type="text" id="q" name="q" value="{{ q }}" placeholder="Nombre, correo o asunto">
+        </div>
+        <div class="jobs-filters__actions">
+            <button type="submit" class="btn-solid">Buscar</button>
+            <a href="?estado={{ estado }}" class="btn-ghost">Limpiar</a>
+        </div>
+    </form>
+
+    {% for m in page_obj %}
+        <article class="msg-card {% if not m.atendido %}msg-card--new{% endif %}">
+            <div class="msg-card__head">
+                <div>
+                    <h2 class="msg-card__subject">{{ m.asunto }}</h2>
+                    <p class="msg-card__meta">{{ m.nombre }} · {{ m.email }} · {{ m.fecha_envio|date:"d M Y, H:i" }}</p>
+                </div>
+                {% if m.atendido %}<span class="post-badge post-badge--guardada">Atendido</span>{% else %}<span class="post-badge post-badge--en_entrevista">Sin atender</span>{% endif %}
+            </div>
+
+            {% if m.mensaje|length > 300 %}
+                <details class="msg-card__body">
+                    <summary>{{ m.mensaje|truncatechars:300 }} <strong style="color:var(--color-primary);">Ver todo</strong></summary>
+                    <p>{{ m.mensaje|linebreaksbr }}</p>
+                </details>
+            {% else %}
+                <p class="msg-card__body">{{ m.mensaje|linebreaksbr }}</p>
+            {% endif %}
+
+            <div class="msg-card__actions">
+                {% with 'Re: '|add:m.asunto as asunto_respuesta %}
+                    <a href="mailto:{{ m.email }}?subject={{ asunto_respuesta|urlencode:'' }}" class="btn-solid">
+                        <span class="material-symbols-outlined" style="font-size:18px;">reply</span> Responder
+                    </a>
+                {% endwith %}
+                <form method="post" action="{% url 'administracion:mensaje_toggle' m.pk %}">
+                    {% csrf_token %}<input type="hidden" name="estado" value="{{ estado }}">
+                    <button type="submit" class="btn-ghost">{% if m.atendido %}Reabrir{% else %}Marcar como atendido{% endif %}</button>
+                </form>
+                <form method="post" action="{% url 'administracion:mensaje_eliminar' m.pk %}" onsubmit="return confirm('¿Eliminar este mensaje? Esta acción no se puede deshacer.');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-link-small btn-link-small--danger">Eliminar</button>
+                </form>
+            </div>
+        </article>
+    {% empty %}
+        <div class="jobs-empty">
+            <span class="material-symbols-outlined" style="font-size:48px;">mark_email_read</span>
+            <p>No hay mensajes en esta vista.</p>
+        </div>
+    {% endfor %}
+
+    {% if page_obj.paginator.num_pages > 1 %}
+        <div class="jobs-pagination">
+            {% if page_obj.has_previous %}
+                <a href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ page_obj.previous_page_number }}" class="btn-ghost">Anterior</a>
+            {% endif %}
+            <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ page_obj.next_page_number }}" class="btn-ghost">Siguiente</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

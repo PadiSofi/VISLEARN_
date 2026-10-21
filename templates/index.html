@@ -21,13 +21,17 @@
     </div>
 </section>
 
-<section class="info-ticker">
-    <div class="info-ticker__inner" data-reveal="fade">
-        <div class="info-ticker__item"><span>Gestión de Visas</span><span class="info-ticker__dot"></span></div>
-        <div class="info-ticker__item"><span>Asesoría Académica</span><span class="info-ticker__dot"></span></div>
-        <div class="info-ticker__item"><span>Seguimiento de Trámites</span><span class="info-ticker__dot"></span></div>
-        <div class="info-ticker__item"><span>Alianza SENA-ADSO</span><span class="info-ticker__dot"></span></div>
-        <div class="info-ticker__item"><span>Movilidad Internacional</span></div>
+<section class="marquee" aria-label="Lo que ofrece VisLearn">
+    <div class="marquee__track">
+        {% for copia in "abcd" %}
+            <div class="marquee__group" {% if not forloop.first %}aria-hidden="true"{% endif %}>
+                <span class="marquee__item">Gestión de Visas</span>
+                <span class="marquee__item">Asesoría Académica</span>
+                <span class="marquee__item">Seguimiento de Trámites</span>
+                <span class="marquee__item">Alianza SENA-ADSO</span>
+                <span class="marquee__item">Movilidad Internacional</span>
+            </div>
+        {% endfor %}
     </div>
 </section>
 
@@ -162,14 +166,20 @@
                 <button class="btn-submit" type="submit">Enviar Mensaje</button>
             </form>
         </div>
-        <div class="map-placeholder">
-            <div class="map-placeholder__icon">
-                <span class="material-symbols-outlined" style="color:var(--color-primary); font-size:32px;">location_on</span>
+        {% if sitio.direccion or sitio.email or sitio.telefono %}
+            <div class="map-placeholder">
+                <div class="map-placeholder__icon">
+                    <span class="material-symbols-outlined" style="color:var(--color-primary); font-size:32px;">location_on</span>
+                </div>
+                <h3 style="font-family:var(--font-display); color:var(--color-primary); margin-bottom:8px;">Estamos para ayudarte</h3>
+                {% if sitio.direccion %}<p style="color:var(--color-on-surface-variant); margin:0 0 8px;">{{ sitio.direccion }}</p>{% endif %}
+                {% if sitio.email %}<p style="margin:0 0 8px;"><a href="mailto:{{ sitio.email }}" style="color:var(--color-primary);">{{ sitio.email }}</a></p>{% endif %}
+                {% if sitio.telefono %}<p style="margin:0;"><a href="tel:{{ sitio.telefono|cut:' ' }}" style="color:var(--color-primary);">{{ sitio.telefono }}</a></p>{% endif %}
+                {% if sitio.direccion %}
+                    <iframe class="map-embed" src="https://www.google.com/maps?q={{ sitio.direccion|urlencode }}&output=embed" loading="lazy" title="Mapa de la sede" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                {% endif %}
             </div>
-            <h3 style="font-family:var(--font-display); color:var(--color-primary); margin-bottom:8px;">Sede ADSO SENA</h3>
-            <p style="color:var(--color-on-surface-variant); margin-bottom:8px;">Calle 57 # 8 - 69, Bogotá, Colombia</p>
-            <div class="map-placeholder__box">Mapa Interactivo Placeholder</div>
-        </div>
+        {% endif %}
     </div>
 </section>
 
@@ -185,58 +195,42 @@
             <ul class="academic-section__list">
                 <li>
                     <span class="material-symbols-outlined">check_circle</span>
-                    <span>Soporte técnico 24/7 para el cargue de documentos.</span>
+                    <span>Carga y revisión de tus documentos en un solo lugar.</span>
                 </li>
                 <li>
                     <span class="material-symbols-outlined">check_circle</span>
-                    <span>Alianza directa con instituciones educativas globales.</span>
+                    <span>Observaciones de tu instructor en cada documento.</span>
                 </li>
                 <li>
                     <span class="material-symbols-outlined">check_circle</span>
-                    <span>Simulacros de entrevistas consulares con expertos.</span>
+                    <span>Línea de tiempo y notificaciones con cada avance de tu proceso.</span>
                 </li>
             </ul>
         </div>
     </div>
 </section>
 
+{% if testimonios %}
 <section class="testimonials">
     <div class="testimonials__inner">
         <div class="testimonials__header" data-reveal="up">
             <h2 class="section-title">Lo que dicen nuestros egresados</h2>
         </div>
         <div class="testimonials__grid" data-reveal-stagger="up">
-            <div class="testimonial-card">
-                <div class="testimonial-card__header">
-                    <div class="testimonial-card__avatar"><span class="material-symbols-outlined">person</span></div>
-                    <div>
-                        <h4 class="testimonial-card__name">Carlos Ruiz</h4>
-                        <p class="testimonial-card__role">Desarrollador en Berlín</p>
+            {% for t in testimonios %}
+                <div class="testimonial-card">
+                    <div class="testimonial-card__header">
+                        <div class="testimonial-card__avatar"><span class="material-symbols-outlined">person</span></div>
+                        <div>
+                            <h4 class="testimonial-card__name">{{ t.nombre }}</h4>
+                            <p class="testimonial-card__role">{{ t.rol }}</p>
+                        </div>
                     </div>
+                    <p class="testimonial-card__quote">"{{ t.texto }}"</p>
                 </div>
-                <p class="testimonial-card__quote">"Gracias a VisLearn y la alianza ADSO, ahora trabajo como desarrollador en Berlín. El proceso de visa fue impecable."</p>
-            </div>
-            <div class="testimonial-card">
-                <div class="testimonial-card__header">
-                    <div class="testimonial-card__avatar"><span class="material-symbols-outlined">person</span></div>
-                    <div>
-                        <h4 class="testimonial-card__name">Elena Gómez</h4>
-                        <p class="testimonial-card__role">Ingeniera en Toronto</p>
-                    </div>
-                </div>
-                <p class="testimonial-card__quote">"La asesoría experta me dio la confianza que necesitaba para mi entrevista consular. ¡Ya estoy en Toronto!"</p>
-            </div>
-            <div class="testimonial-card">
-                <div class="testimonial-card__header">
-                    <div class="testimonial-card__avatar"><span class="material-symbols-outlined">person</span></div>
-                    <div>
-                        <h4 class="testimonial-card__name">Mateo López</h4>
-                        <p class="testimonial-card__role">Aprendiz SENA</p>
-                    </div>
-                </div>
-                <p class="testimonial-card__quote">"Excelente acompañamiento en cada paso. VisLearn entiende las necesidades de los aprendices SENA."</p>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
+{% endif %}
 {% endblock %}

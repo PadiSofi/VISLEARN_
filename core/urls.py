@@ -17,4 +17,6 @@ urlpatterns = [
     path('gestion-blog/nueva/', views.blog_crear, name='blog_crear'),
     path('gestion-blog/<int:pk>/editar/', views.blog_editar, name='blog_editar'),
     path('gestion-blog/<int:pk>/eliminar/', views.blog_eliminar, name='blog_eliminar'),
+    path('privacidad/', views.privacidad, name='privacidad'),
+    path('terminos/', views.terminos, name='terminos'),
 ]

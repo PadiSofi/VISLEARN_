@@ -1,0 +1,59 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Testimonios{% endblock %}
+{% block dashboard_css %}
+<link rel="stylesheet" href="{% static 'css/ofertas.css' %}">
+<link rel="stylesheet" href="{% static 'css/administracion.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <a href="{% url 'administracion:inicio' %}" style="display:inline-flex; align-items:center; gap:4px; margin-bottom:16px; text-decoration:none; color:var(--color-on-surface-variant);">
+        <span class="material-symbols-outlined" style="font-size:18px;">arrow_back</span> Administración
+    </a>
+    <div class="manage-bar">
+        <div class="jobs-header" style="margin:0;">
+            <h1 class="jobs-header__title">Testimonios</h1>
+            <p class="jobs-header__sub">Solo se muestran en el inicio los que están publicados y con autorización confirmada.</p>
+        </div>
+        <a href="{% url 'administracion:testimonio_crear' %}" class="btn-solid">
+            <span class="material-symbols-outlined" style="font-size:18px;">add</span> Nuevo testimonio
+        </a>
+    </div>
+
+    <div class="manage-table-wrap">
+        <table class="manage-table">
+            <thead>
+                <tr><th>Persona</th><th>Testimonio</th><th>Autorización</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr>
+            </thead>
+            <tbody>
+                {% for t in testimonios %}
+                    <tr>
+                        <td><strong>{{ t.nombre }}</strong><br><span style="font-size:12px; color:var(--color-on-surface-variant);">{{ t.rol }}</span></td>
+                        <td style="white-space:normal; min-width:260px;">{{ t.texto|truncatechars:110 }}</td>
+                        <td>{% if t.autorizacion_confirmada %}<span class="post-badge post-badge--aceptada">Confirmada</span>{% else %}<span class="post-badge post-badge--rechazada">Sin autorización</span>{% endif %}</td>
+                        <td>{% if t.publicado %}<span class="post-badge post-badge--postulado">Publicado</span>{% else %}<span class="post-badge post-badge--guardada">Oculto</span>{% endif %}</td>
+                        <td>{{ t.fecha_creacion|date:"d M Y" }}</td>
+                        <td>
+                            <div class="manage-actions">
+                                <a href="{% url 'administracion:testimonio_editar' t.pk %}" class="btn-link-small">Editar</a>
+                                <form method="post" action="{% url 'administracion:testimonio_toggle' t.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-link-small">{% if t.publicado %}Ocultar{% else %}Publicar{% endif %}</button>
+                                </form>
+                                <form method="post" action="{% url 'administracion:testimonio_eliminar' t.pk %}" onsubmit="return confirm('¿Eliminar este testimonio?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-link-small btn-link-small--danger">Eliminar</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="6" style="text-align:center; padding:32px; color:var(--color-on-surface-variant);">Aún no hay testimonios. Mientras no haya ninguno publicado, la sección no aparece en el inicio.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

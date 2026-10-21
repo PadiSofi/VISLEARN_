@@ -5,36 +5,90 @@
 {% block extra_css %}<link rel="stylesheet" href="{% static 'css/auth.css' %}">{% endblock %}
 
 {% block content %}
-<div class="auth-page" style="padding-top: 48px; padding-bottom: 48px;">
-    <div class="auth-card" style="max-width: 480px;">
-        <div class="auth-card__header">
-            <h1 class="auth-card__title">Crea tu cuenta</h1>
-            <p class="auth-card__subtitle">Comienza tu proceso de movilidad estudiantil</p>
-        </div>
+<div class="auth-split">
+    {% include 'autenticacion/_aside.html' with titulo='Empieza tu camino hacia el exterior' texto='Crea tu cuenta y organiza tu proceso de visa con el acompañamiento de tu instructor.' %}
 
-        {% if form.non_field_errors %}
-            <ul class="auth-errorlist">
-                {% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}
-            </ul>
-        {% endif %}
+    <section class="auth-panel">
+        <div class="auth-panel__inner auth-panel__inner--wide" data-reveal="up">
+            <header class="auth-heading">
+                <span class="auth-eyebrow">Registro</span>
+                <h1 class="auth-heading__title">Crea tu cuenta</h1>
+                <p class="auth-heading__sub">Te toma un par de minutos.</p>
+            </header>
 
-        <form class="auth-form" method="post">
-            {% csrf_token %}
-            {% for field in form %}
-                <div class="auth-field">
-                    <label class="auth-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {{ field }}
-                    {% for error in field.errors %}
-                        <span style="color:#ba1a1a; font-size:12px;">{{ error }}</span>
-                    {% endfor %}
+            {% if form.non_field_errors %}
+                <div class="auth-alert" role="alert">
+                    <span class="material-symbols-outlined">error</span>
+                    <div>{% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}</div>
                 </div>
-            {% endfor %}
-            <button class="btn-auth-submit" type="submit">Registrarme</button>
-        </form>
+            {% endif %}
 
-        <p class="auth-footer-text">
-            ¿Ya tienes cuenta? <a href="{% url 'usuarios:login' %}">Inicia sesión</a>
-        </p>
-    </div>
+            <form class="auth-form" method="post" style="gap:20px;">
+                {% csrf_token %}
+
+                <div class="auth-section">
+                    <h2 class="auth-section__title"><span class="auth-step">1</span> Tipo de cuenta</h2>
+                    <div class="role-cards">
+                        {% for radio in form.rol %}
+                            <label class="role-card" for="{{ radio.id_for_label }}">
+                                {{ radio.tag }}
+                                <span class="material-symbols-outlined role-card__icon">{% if radio.data.value == 'instructor' %}badge{% else %}school{% endif %}</span>
+                                <span class="role-card__title">{{ radio.choice_label }}</span>
+                                <span class="role-card__desc">{% if radio.data.value == 'instructor' %}Acompaña y revisa a los aprendices. Requiere aprobación de un administrador.{% else %}Gestiona tu proceso de visa y tus documentos.{% endif %}</span>
+                                <span class="role-card__check"><span class="material-symbols-outlined">check</span></span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                    {% for error in form.rol.errors %}<span class="auth-error">{{ error }}</span>{% endfor %}
+                </div>
+
+                <div class="auth-section">
+                    <h2 class="auth-section__title"><span class="auth-step">2</span> Identificación</h2>
+                    <div class="auth-row">
+                        {% include 'autenticacion/_campo.html' with field=form.tipo_documento icon='badge' %}
+                        {% include 'autenticacion/_campo.html' with field=form.numero_documento icon='pin' %}
+                    </div>
+                </div>
+
+                <div class="auth-section">
+                    <h2 class="auth-section__title"><span class="auth-step">3</span> Tus datos</h2>
+                    <div class="auth-row">
+                        {% include 'autenticacion/_campo.html' with field=form.first_name icon='person' %}
+                        {% include 'autenticacion/_campo.html' with field=form.last_name icon='person' %}
+                    </div>
+                    {% include 'autenticacion/_campo.html' with field=form.email icon='mail' %}
+                </div>
+
+                <div class="auth-section">
+                    <h2 class="auth-section__title"><span class="auth-step">4</span> Seguridad</h2>
+                    <div>
+                        {% include 'autenticacion/_campo.html' with field=form.password1 icon='lock' toggle=True %}
+                        <div class="pw-meter" data-pw-meter data-level="0">
+                            <div class="pw-meter__bars"><span></span><span></span><span></span><span></span></div>
+                            <span class="pw-meter__label"></span>
+                        </div>
+                    </div>
+                    <div>
+                        {% include 'autenticacion/_campo.html' with field=form.password2 icon='lock_reset' toggle=True %}
+                        <span data-pw-match></span>
+                    </div>
+                </div>
+
+                <label class="auth-check">
+                    {{ form.aceptar_terminos }}
+                    <span class="auth-check__box"><span class="material-symbols-outlined">check</span></span>
+                    <span class="auth-check__text">Acepto los <a href="{% url 'core:terminos' %}" target="_blank">términos y condiciones</a> y la <a href="{% url 'core:privacidad' %}" target="_blank">política de tratamiento de datos</a>.</span>
+                </label>
+                {% for error in form.aceptar_terminos.errors %}<span class="auth-error">{{ error }}</span>{% endfor %}
+
+                <button class="btn-auth-submit" type="submit">Crear mi cuenta</button>
+            </form>
+
+            <div class="auth-divider">¿Ya tienes cuenta?</div>
+            <a href="{% url 'usuarios:login' %}" class="btn-ghost auth-cta">Iniciar sesión</a>
+        </div>
+    </section>
 </div>
 {% endblock %}
+
+{% block extra_js %}<script src="{% static 'js/auth.js' %}"></script>{% endblock %}

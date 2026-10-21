@@ -1,7 +1,7 @@
 import os
 from django import forms
 from django.core.files.uploadedfile import UploadedFile
-from .models import MensajeContacto, Publicacion
+from .models import MensajeContacto, Publicacion, Testimonio
 
 class ContactoForm(forms.ModelForm):
     class Meta:
@@ -27,7 +27,7 @@ class PublicacionForm(forms.ModelForm):
         }
         help_texts = {
             'resumen': 'Máximo 300 caracteres. Se muestra en las tarjetas del blog.',
-            'contenido': 'Texto plano. Separa los párrafos con una línea en blanco.',
+            'contenido': 'Texto plano. Separa los párrafos con una línea en blanco. Usa "## Título" para un subtítulo y "- " al inicio de la línea para viñetas.',
             'imagen': 'JPG, PNG o WEBP, máximo 5 MB.',
             'destacado': 'Aparece en grande al inicio del blog.',
         }
@@ -40,3 +40,9 @@ class PublicacionForm(forms.ModelForm):
             if imagen.size > 5 * 1024 * 1024:
                 raise forms.ValidationError('La imagen no puede superar los 5 MB.')
         return imagen
+
+class TestimonioForm(forms.ModelForm):
+    class Meta:
+        model = Testimonio
+        fields = ['nombre', 'rol', 'texto', 'autorizacion_confirmada', 'publicado']
+        widgets = {'texto': forms.Textarea(attrs={'rows': 5})}

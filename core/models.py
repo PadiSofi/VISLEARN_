@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from .utils import optimizar_imagen
 from django.utils.text import slugify
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -26,6 +27,26 @@ class Publicacion(models.Model):
         ('oportunidades', 'Oportunidades'),
         ('consejos', 'Consejos'),
     ]
+
+    CATEGORIA_DESCRIPCION = {
+        'visa': 'Pasos, requisitos y recomendaciones para tramitar tu visa.',
+        'testimonios': 'Historias de quienes ya vivieron el proceso.',
+        'oportunidades': 'Programas y ofertas para estudiar o trabajar fuera del país.',
+        'consejos': 'Ideas prácticas para preparar tu proceso.',
+    }
+    CATEGORIA_ICONO = {
+        'visa': 'menu_book',
+        'testimonios': 'forum',
+        'oportunidades': 'work',
+        'consejos': 'lightbulb',
+    }
+
+    def tiempo_lectura(self):
+        return max(1, round(len(self.contenido.split()) / 200))
+
+    def icono_categoria(self):
+        return self.CATEGORIA_ICONO.get(self.categoria, 'article')
+
     titulo = models.CharField(max_length=200)
     slug = models.SlugField(max_length=220, unique=True)
     categoria = models.CharField(max_length=20, choices=CATEGORIA_CHOICES)
@@ -85,7 +106,37 @@ def notificar(usuario, mensaje, url=''):
 
 def notificar_instructores(mensaje, url=''):
     from django.contrib.auth import get_user_model
-    instructores = get_user_model().objects.filter(is_instructor=True)
+    instructores = get_user_model().objects.filter(is_instructor=True, is_active=True)
     Notificacion.objects.bulk_create([
         Notificacion(usuario=i, mensaje=mensaje[:255], url=url) for i in instructores
     ])
+
+def notificar_administradores(mensaje, url=''):
+    from django.contrib.auth import get_user_model
+    admins = get_user_model().objects.filter(is_superuser=True, is_active=True)
+    Notificacion.objects.bulk_create([
+        Notificacion(usuario=a, mensaje=mensaje[:255], url=url) for a in admins
+    ])
+
+class Testimonio(models.Model):
+    nombre = models.CharField(max_length=100)
+    rol = models.CharField(max_length=120, help_text='Ej: Desarrollador de software, Berlín')
+    texto = models.TextField(max_length=400)
+    autorizacion_confirmada = models.BooleanField(
+        default=False,
+        help_text='Marca esta casilla solo si la persona autorizó por escrito publicar su nombre y su testimonio.',
+    )
+    publicado = models.BooleanField(default=False)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-fecha_creacion']
+        verbose_name = 'Testimonio'
+        verbose_name_plural = 'Testimonios'
+
+    def __str__(self):
+        return f'{self.nombre} - {self.rol}'
+
+    def clean(self):
+        if self.publicado and not self.autorizacion_confirmada:
+            raise ValidationError('No se puede publicar un testimonio sin la autorización de la persona.')

@@ -6,7 +6,7 @@
 
 {% block content %}
 <section class="blog-hero">
-    <h1 class="blog-hero__title" data-split>VisLearn Insights</h1>
+    <h1 class="blog-hero__title" data-split>VisLearn Blog</h1>
     <p class="blog-hero__text" data-reveal="up" style="--reveal-delay:500ms">Guías, testimonios y recomendaciones para tu proceso de movilidad estudiantil internacional.</p>
 </section>
 
@@ -17,31 +17,42 @@
     {% endfor %}
 </div>
 
-{% if destacada %}
-    <div class="blog-featured" data-reveal="up">
-        {% if destacada.imagen %}<img src="{{ destacada.imagen.url }}" alt="{{ destacada.titulo }}" class="blog-featured__image" loading="lazy" data-parallax="0.12" data-parallax-scale="1.15">{% endif %}
-        <div class="blog-featured__body">
-            <span class="blog-card__tag">{{ destacada.get_categoria_display }}</span>
-            <h2 class="blog-featured__title">{{ destacada.titulo }}</h2>
-            <p class="blog-featured__excerpt">{{ destacada.resumen }}</p>
-            <p class="blog-featured__meta">{{ destacada.autor }} · {{ destacada.fecha_publicacion|date:"d M Y" }}</p>
-            <a href="{% url 'core:detalle_publicacion' destacada.slug %}" class="btn-primary" style="margin-top:16px; align-self:flex-start;">Leer artículo</a>
+{% if encabezado %}
+    <div class="blog-category-header" data-reveal="up">
+        <div class="blog-category-header__icon"><span class="material-symbols-outlined">{{ encabezado.icono }}</span></div>
+        <div>
+            <h2>{{ encabezado.nombre }}</h2>
+            <p>{{ encabezado.descripcion }} · {{ encabezado.total }} artículo{{ encabezado.total|pluralize }}</p>
         </div>
+    </div>
+{% endif %}
+
+{% if destacada %}
+    <div class="blog-featured-wrap">
+        <article class="blog-featured" data-reveal="up">
+            <div class="blog-featured__media">
+                {% if destacada.imagen %}
+                    <img src="{{ destacada.imagen.url }}" alt="{{ destacada.titulo }}" class="blog-featured__image" data-parallax="0.12" data-parallax-scale="1.15">
+                {% else %}
+                    <div class="blog-featured__placeholder"><span class="material-symbols-outlined">{{ destacada.icono_categoria }}</span></div>
+                {% endif %}
+            </div>
+            <div class="blog-featured__body">
+                <span class="blog-card__tag">Destacado · {{ destacada.get_categoria_display }}</span>
+                <h2 class="blog-featured__title">{{ destacada.titulo }}</h2>
+                <p class="blog-featured__excerpt">{{ destacada.resumen }}</p>
+                <p class="blog-featured__meta">{{ destacada.autor }} · {{ destacada.fecha_publicacion|date:"d M Y" }} · {{ destacada.tiempo_lectura }} min de lectura</p>
+                <a href="{% url 'core:detalle_publicacion' destacada.slug %}" class="btn-primary">Leer artículo</a>
+            </div>
+        </article>
     </div>
 {% endif %}
 
 <div class="blog-grid" data-reveal-stagger="up">
     {% for publicacion in publicaciones %}
-        <a href="{% url 'core:detalle_publicacion' publicacion.slug %}" class="blog-card">
-            {% if publicacion.imagen %}<img src="{{ publicacion.imagen.url }}" alt="{{ publicacion.titulo }}" class="blog-card__image" loading="lazy">{% endif %}
-            <div class="blog-card__body">
-                <span class="blog-card__tag">{{ publicacion.get_categoria_display }}</span>
-                <h3 class="blog-card__title">{{ publicacion.titulo }}</h3>
-                <p class="blog-card__excerpt">{{ publicacion.resumen }}</p>
-            </div>
-        </a>
+        {% include 'blog_card.html' %}
     {% empty %}
-        <p style="grid-column:1/-1; text-align:center; color:var(--color-on-surface-variant);">Aún no hay publicaciones. Agrega la primera desde el panel de administración.</p>
+        <p style="grid-column:1/-1; text-align:center; color:var(--color-on-surface-variant);">Aún no hay publicaciones en esta sección.</p>
     {% endfor %}
 </div>
 {% endblock %}

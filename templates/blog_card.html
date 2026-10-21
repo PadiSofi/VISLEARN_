@@ -1,0 +1,16 @@
+<a href="{% url 'core:detalle_publicacion' publicacion.slug %}" class="blog-card">
+    {% if publicacion.imagen %}
+        <img src="{{ publicacion.imagen.url }}" alt="{{ publicacion.titulo }}" class="blog-card__image" loading="lazy">
+    {% else %}
+        <div class="blog-card__placeholder"><span class="material-symbols-outlined">{{ publicacion.icono_categoria }}</span></div>
+    {% endif %}
+    <div class="blog-card__body">
+        <span class="blog-card__tag">{{ publicacion.get_categoria_display }}</span>
+        <h3 class="blog-card__title">{{ publicacion.titulo }}</h3>
+        <p class="blog-card__excerpt">{{ publicacion.resumen }}</p>
+        <div class="blog-card__footer">
+            <span>{{ publicacion.fecha_publicacion|date:"d M Y" }} · {{ publicacion.tiempo_lectura }} min</span>
+            <span class="blog-card__more">Leer <span class="material-symbols-outlined">arrow_forward</span></span>
+        </div>
+    </div>
+</a>

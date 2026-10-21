@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'aprendiz',
     'instructor',
     'ofertas',
+    'administracion',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +68,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'core.context_processors.notificaciones',
+                'core.context_processors.sitio',
             ],
         },
     },
@@ -143,6 +145,12 @@ MAILERS = {
         },
     },
 }
+
+CONTACTO_EMAIL = config('CONTACTO_EMAIL', default='')
+CONTACTO_TELEFONO = config('CONTACTO_TELEFONO', default='')
+CONTACTO_WHATSAPP = config('CONTACTO_WHATSAPP', default='')
+CONTACTO_DIRECCION = config('CONTACTO_DIRECCION', default='')
+RESPONSABLE_DATOS = config('RESPONSABLE_DATOS', default='VisLearn')
 
 DEFAULT_FROM_EMAIL = f"VisLearn <{config('EMAIL_HOST_USER')}>"
 ADMIN_EMAIL = config('ADMIN_EMAIL')

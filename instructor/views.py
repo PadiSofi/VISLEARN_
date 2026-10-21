@@ -6,30 +6,33 @@ from django.shortcuts import get_object_or_404, redirect
 from aprendiz.models import Documento, EtapaSeguimiento
 from .forms import RevisarDocumentoForm, ActualizarEtapaForm
 from core.models import notificar
+from django.db.models import Q
+from aprendiz.models import Documento
 
 # Create your views here.
 
 @never_cache
 @instructor_required
 def lista_aprendices(request):
-    aprendices = PerfilAprendiz.objects.select_related('usuario').all()
+    base = PerfilAprendiz.objects.filter(
+        usuario__is_aprendiz=True, usuario__is_active=True
+    ).select_related('usuario')
+    aprendices = base
 
     query = request.GET.get('q')
     if query:
-        aprendices = aprendices.filter(usuario__first_name__icontains=query) | \
-        aprendices.filter(usuario__last_name__icontains=query) | \
-        aprendices.filter(usuario__numero_documento__icontains=query)
-
-    total_aprendices = PerfilAprendiz.objects.count()
-    documentos_pendientes = sum(p.documentos.filter(estado='en_revision').count() for p in PerfilAprendiz.objects.all())
-    procesos_completados = sum(1 for p in PerfilAprendiz.objects.all() if p.porcentaje_avance_proceso() == 100)
+        aprendices = aprendices.filter(
+            Q(usuario__first_name__icontains=query) |
+            Q(usuario__last_name__icontains=query) |
+            Q(usuario__numero_documento__icontains=query)
+        )
 
     return render(request, 'instructor/aprendices.html', {
         'aprendices': aprendices,
         'query': query or '',
-        'total_aprendices': total_aprendices,
-        'documentos_pendientes': documentos_pendientes,
-        'procesos_completados': procesos_completados,
+        'total_aprendices': base.count(),
+        'documentos_pendientes': Documento.objects.filter(perfil__in=base, estado='en_revision').count(),
+        'procesos_completados': sum(1 for p in base if p.porcentaje_avance_proceso() == 100),
     })
 
 @never_cache

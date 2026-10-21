@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}VisLearn - Términos de uso{% endblock %}
+
+{% block content %}
+{# BORRADOR: debe ser revisado por el responsable institucional antes de publicarse. #}
+<div class="legal-page">
+    <h1>Términos de uso</h1>
+    <p class="legal-page__updated">Última actualización: octubre de 2026</p>
+
+    <h2>1. Qué es VisLearn</h2>
+    <p>VisLearn es una plataforma de acompañamiento para organizar documentos y hacer seguimiento a procesos de movilidad estudiantil internacional. No es un consulado, una embajada ni una entidad migratoria.</p>
+
+    <h2>2. Información orientativa</h2>
+    <p>El contenido de la plataforma es informativo y no sustituye la asesoría legal, migratoria o consular oficial. VisLearn no garantiza la aprobación de visas, admisiones ni ofertas laborales.</p>
+
+    <h2>3. Tu cuenta</h2>
+    <p>Debes registrar datos verdaderos y cuidar tu contraseña. Eres responsable de lo que ocurra con tu cuenta. Las cuentas de instructor están sujetas a aprobación.</p>
+
+    <h2>4. Documentos que cargas</h2>
+    <p>Declaras que los documentos que subes son tuyos o que tienes derecho a usarlos, y que son auténticos. Solo se aceptan archivos PDF, JPG o PNG de hasta 10 MB.</p>
+
+    <h2>5. Ofertas laborales</h2>
+    <p>Las ofertas publicadas provienen de terceros. VisLearn no intermedia contrataciones ni garantiza que una oferta siga vigente: verifica siempre los requisitos y las condiciones en la convocatoria original.</p>
+
+    <h2>6. Uso adecuado</h2>
+    <p>No está permitido suplantar a otras personas, subir contenido ilícito o intentar acceder a información de otros usuarios.</p>
+
+    <h2>7. Suspensión de cuentas</h2>
+    <p>Podemos suspender cuentas que incumplan estos términos.</p>
+
+    <h2>8. Cambios y ley aplicable</h2>
+    <p>Podemos actualizar estos términos y publicaremos la versión vigente en esta página. Se rigen por las leyes de Colombia.</p>
+
+    <h2>9. Contacto</h2>
+    <p>{% if sitio.email %}Escríbenos a <a href="mailto:{{ sitio.email }}">{{ sitio.email }}</a>.{% else %}Escríbenos desde el <a href="{% url 'core:contacto' %}">formulario de contacto</a>.{% endif %}</p>
+</div>
+{% endblock %}

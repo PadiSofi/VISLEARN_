@@ -1,0 +1,61 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}VisLearn - Administración{% endblock %}
+{% block dashboard_css %}
+<link rel="stylesheet" href="{% static 'css/ofertas.css' %}">
+<link rel="stylesheet" href="{% static 'css/administracion.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="jobs-header">
+        <h1 class="jobs-header__title">Administración</h1>
+        <p class="jobs-header__sub">Gestiona usuarios, contenido y ofertas de VisLearn desde un solo lugar.</p>
+    </div>
+
+    <h2 class="admin-section">Usuarios</h2>
+    <div class="admin-grid">
+        <a href="{% url 'administracion:usuarios' %}?tab=pendientes" class="admin-card {% if pendientes %}admin-card--alert{% endif %}">
+            <div class="admin-card__icon"><span class="material-symbols-outlined">how_to_reg</span></div>
+            <div>
+                <p class="admin-card__value">{{ pendientes }}</p>
+                <p class="admin-card__label">Solicitudes de instructor</p>
+                {% if pendientes %}<p class="admin-card__hint">Esperan tu revisión</p>{% endif %}
+            </div>
+        </a>
+        <a href="{% url 'administracion:usuarios' %}?tab=instructores" class="admin-card">
+            <div class="admin-card__icon"><span class="material-symbols-outlined">school</span></div>
+            <div><p class="admin-card__value">{{ instructores }}</p><p class="admin-card__label">Instructores</p></div>
+        </a>
+        <a href="{% url 'administracion:usuarios' %}?tab=aprendices" class="admin-card">
+            <div class="admin-card__icon"><span class="material-symbols-outlined">groups</span></div>
+            <div><p class="admin-card__value">{{ aprendices }}</p><p class="admin-card__label">Aprendices</p></div>
+        </a>
+    </div>
+
+    <h2 class="admin-section">Contenido y ofertas</h2>
+    <div class="admin-grid">
+        <a href="{% url 'ofertas:gestion_lista' %}" class="admin-card">
+            <div class="admin-card__icon"><span class="material-symbols-outlined">work</span></div>
+            <div><p class="admin-card__value">{{ ofertas }}</p><p class="admin-card__label">Ofertas laborales activas</p></div>
+        </a>
+        <a href="{% url 'core:blog_gestion' %}" class="admin-card">
+            <div class="admin-card__icon"><span class="material-symbols-outlined">article</span></div>
+            <div><p class="admin-card__value">{{ publicaciones }}</p><p class="admin-card__label">Publicaciones del blog</p></div>
+        </a>
+                <a href="{% url 'administracion:testimonios' %}" class="admin-card">
+            <div class="admin-card__icon"><span class="material-symbols-outlined">format_quote</span></div>
+            <div><p class="admin-card__value">{{ testimonios }}</p><p class="admin-card__label">Testimonios</p></div>
+        </a>
+        <a href="{% url 'administracion:mensajes' %}?estado=pendientes" class="admin-card {% if mensajes_nuevos %}admin-card--alert{% endif %}">
+            <div class="admin-card__icon"><span class="material-symbols-outlined">mail</span></div>
+            <div>
+                <p class="admin-card__value">{{ mensajes_nuevos }}</p>
+                <p class="admin-card__label">Mensajes de contacto sin atender</p>
+                {% if mensajes_nuevos %}<p class="admin-card__hint">Esperan respuesta</p>{% endif %}
+            </div>
+        </a>
+    </div>
+</div>
+{% endblock %}

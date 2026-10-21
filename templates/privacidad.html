@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}VisLearn - Política de privacidad{% endblock %}
+
+{% block content %}
+{# BORRADOR: debe ser revisado por el responsable institucional antes de publicarse. #}
+<div class="legal-page">
+    <h1>Política de privacidad</h1>
+    <p class="legal-page__updated">Última actualización: octubre de 2026</p>
+
+    <p>Esta política explica cómo VisLearn trata los datos personales de quienes usan la plataforma, conforme a la Ley Estatutaria 1581 de 2012 de protección de datos personales de Colombia.</p>
+
+    <h2>1. Responsable del tratamiento</h2>
+    <p>{{ sitio.responsable }}.{% if sitio.email %} Para consultas o reclamos sobre tus datos puedes escribir a <a href="mailto:{{ sitio.email }}">{{ sitio.email }}</a>.{% else %} Puedes escribirnos desde el <a href="{% url 'core:contacto' %}">formulario de contacto</a>.{% endif %}</p>
+
+    <h2>2. Datos que recolectamos</h2>
+    <ul>
+        <li>Identificación: tipo y número de documento, nombres y apellidos.</li>
+        <li>Contacto: correo electrónico y los datos de contacto y residencia que diligencias en tu perfil.</li>
+        <li>Información académica, laboral, de idiomas y socioeconómica que decides registrar en tu perfil.</li>
+        <li>Los documentos que cargas para tu proceso (por ejemplo pasaporte, documento de identidad, certificados y soportes).</li>
+        <li>Tus postulaciones a ofertas laborales y los mensajes que envías por el formulario de contacto.</li>
+    </ul>
+
+    <h2>3. Para qué usamos tus datos</h2>
+    <ul>
+        <li>Gestionar y hacer seguimiento a tu proceso de movilidad estudiantil internacional.</li>
+        <li>Permitir que los instructores revisen tus documentos y te dejen observaciones.</li>
+        <li>Enviarte notificaciones y correos relacionados con tu proceso y con la recuperación de tu contraseña.</li>
+        <li>Responder tus consultas.</li>
+    </ul>
+
+    <h2>4. Quién puede ver tu información</h2>
+    <p>Tú y los instructores de la plataforma. No vendemos tus datos. Para operar el servicio usamos proveedores técnicos, como el alojamiento del sitio y el envío de correos electrónicos.</p>
+
+    <h2>5. Tus derechos</h2>
+    <p>Como titular puedes conocer, actualizar y rectificar tus datos, solicitar su supresión, revocar tu autorización y presentar quejas ante la Superintendencia de Industria y Comercio. Para ejercer estos derechos, escríbenos por los canales indicados arriba.</p>
+
+    <h2>6. Seguridad</h2>
+    <p>Las contraseñas se almacenan cifradas, el acceso a la información depende del rol de cada usuario y tus documentos solo son visibles para ti y para los instructores.</p>
+
+    <h2>7. Cookies</h2>
+    <p>Usamos únicamente cookies técnicas necesarias para mantener tu sesión y proteger los formularios. No usamos cookies de publicidad. Las tipografías e íconos del sitio se cargan desde los servidores de Google Fonts.</p>
+
+    <h2>8. Cambios en esta política</h2>
+    <p>Si actualizamos esta política, publicaremos la nueva versión en esta página con su fecha.</p>
+</div>
+{% endblock %}

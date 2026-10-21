@@ -17,8 +17,13 @@
             <span class="material-symbols-outlined">menu</span>
         </button>
         <nav class="app-nav" id="app-nav">
-            {% if user.is_instructor %}
-                <a href="{% url 'instructor:lista_aprendices' %}" class="app-nav__link is-active">Mis Aprendices</a>
+            {% if user.is_superuser %}
+                <a href="{% url 'administracion:inicio' %}" class="app-nav__link">Administración</a>
+                <a href="{% url 'administracion:usuarios' %}" class="app-nav__link">Usuarios</a>
+                <a href="{% url 'ofertas:gestion_lista' %}" class="app-nav__link">Ofertas</a>
+                <a href="{% url 'core:blog_gestion' %}" class="app-nav__link">Blog</a>
+            {% elif user.is_instructor %}
+                <a href="{% url 'instructor:lista_aprendices' %}" class="app-nav__link">Mis Aprendices</a>
                 <a href="{% url 'ofertas:gestion_lista' %}" class="app-nav__link">Gestionar Ofertas</a>
                 <a href="{% url 'core:blog_gestion' %}" class="app-nav__link">Gestionar Blog</a>
             {% else %}
@@ -55,7 +60,7 @@
                 <div class="app-user-chip__avatar"><span class="material-symbols-outlined">person</span></div>
                 <div class="app-user-chip__info">
                     <span class="app-user-chip__name">{{ user.get_full_name }}</span>
-                    <span class="app-user-chip__role">{% if user.is_instructor %}Instructor{% else %}Aprendiz{% endif %}</span>
+                    <span class="app-user-chip__role">{% if user.is_superuser %}Administrador{% elif user.is_instructor %}Instructor{% else %}Aprendiz{% endif %}</span>
                 </div>
             </div>
             <a href="{% url 'usuarios:logout' %}" class="app-icon-btn" title="Cerrar sesión">
